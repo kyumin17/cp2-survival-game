@@ -5,3 +5,7 @@ Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** 
     hp = _hp;
     str = _str;
 }
+
+void Enemy::move(int playerX, int playerY) {
+
+}

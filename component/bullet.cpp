@@ -17,11 +17,3 @@ void Bullet::attack() {
 bool Bullet::isTouched() {
 
 }
-
-bool Bullet::isEndOfDisplay() {
-    if (x <= 0 || x >= HEIGHT - 1 || y <= 0 || y >= WIDTH - 1) {
-        return 1;
-    } else {
-        return 0;
-    }
-} 

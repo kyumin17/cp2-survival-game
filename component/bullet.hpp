@@ -1,6 +1,6 @@
 #pragma once
 #include "component.hpp"
-#include "enemy.hpp"
+#include "player.hpp"
 
 class Bullet: public Component {
     public:
@@ -10,5 +10,4 @@ class Bullet: public Component {
         void move();
         void attack();
         bool isTouched();
-        bool isEndOfDisplay();
 };

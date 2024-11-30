@@ -9,4 +9,5 @@ class Enemy: public Component {
         bool state[5];
         int stateDuration[5];
         Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character);
+        void move(int playerX, int playerY);
 };
