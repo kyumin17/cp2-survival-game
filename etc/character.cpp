@@ -61,15 +61,14 @@ PlayerCharacter::PlayerCharacter() {
 }
 
 EnemyCharacter::EnemyCharacter() {
-    char frontTxt[4][6] = {
-        "     ",
-        "  #  ",
-        " /|\\ ",
-        " / \\ "
+    char frontTxt[3][4] = {
+        " # ",
+        "/|\\",
+        "/ \\"
     };
 
-    int row = 4;
-    int col = 5;
+    int row = 3;
+    int col = 3;
 
     front = new Cell*[row];
 

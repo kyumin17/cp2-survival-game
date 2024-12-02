@@ -41,7 +41,7 @@ void Display::clearDisplay() {
 
 void Display::printBackgroud() {
     move(0, 0);
-    for (int row = 0; row < 10; row++) {
+    for (int row = 0; row < 12; row++) {
         for (int col = 0; col < WIDTH; col++) {
             printw("%c", '#');
         }

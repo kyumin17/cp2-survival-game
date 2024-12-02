@@ -7,7 +7,7 @@ Bullet::Bullet(int _str, int _direction, int _x, int _y, int _width, int _height
 }
 
 void Bullet::move() {
-    x++;
+    while (x < WIDTH - 1) x++;
 }
 
 void Bullet::attack() {
@@ -15,5 +15,5 @@ void Bullet::attack() {
 }
 
 bool Bullet::isTouched() {
-
+    return false;
 }

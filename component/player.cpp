@@ -1,8 +1,7 @@
 #include "player.hpp"
 
-Player::Player(int _hp, int _x, int _y, int _width, int _height, Cell** _image)
+Player::Player(int _x, int _y, int _width, int _height, Cell** _image)
 : Component(_x, _y, _width, _height, _image) {
-    hp = _hp;
     state = FRONT;
 }
 
@@ -31,20 +30,22 @@ void Player::move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], 
         case BACK:
             state = BACK;
             changeCharacter(playerCharacter.back);
-            if (3 <= y && y < 17) y++;
+            if (3 <= y && y < 15) y++;
             break;
         case FRONT:
             state = FRONT;
             changeCharacter(playerCharacter.front);
-            if (3 < y && y <= 17) y--;
+            if (3 < y && y <= 15) y--;
             break;
     }
 }
 
 void Player::attack(Bullet* bullet[], int& bulletNum) {
-    for (int i = 0; i < bulletNum; i++) {
-        
-    }
+    state = ATTACK;
+    /*
+    BulletShape bulletShape;
+    bullet[bulletNum++] = new Bullet(1, state, x + 4, y + 1, 1, 1, bulletShape.bullet);
+    */
 }
 
 bool Player::isTouch(Enemy* enemy[], int& enemyNum) {

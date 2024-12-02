@@ -10,7 +10,7 @@ class Player: public Component {
         int hp;
         int state;
         Cell** image;
-        Player(int _hp, int _x, int _y, int _width, int _height, Cell** _character);
+        Player(int _x, int _y, int _width, int _height, Cell** _character);
         void move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], int& blockNum, PlayerCharacter playerCharacter);
         void attack(Bullet* bullet[], int& bulletNum);
         bool isTouch(Enemy* enemy[], int& enemyNum);
