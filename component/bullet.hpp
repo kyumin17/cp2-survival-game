@@ -1,6 +1,6 @@
 #pragma once
 #include "component.hpp"
-#include "player.hpp"
+#include "enemy.hpp"
 
 class Bullet: public Component {
     public:

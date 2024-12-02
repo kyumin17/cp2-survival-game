@@ -24,6 +24,7 @@ void stage1Page() {
     char ch;
     int direction = -1;
     int isClear = false;
+    long long time = 0;
 
     //initial setting
     Display display;
@@ -31,23 +32,30 @@ void stage1Page() {
     EnemyCharacter enemyCharacter;
     Player player(3, 65, 10, 5, 4, playerCharacter.front);
 
-    int enemyNum = 10;
-    int blockNum = 1;
+    int enemyNum = 300;
+    int blockNum = 600;
     Enemy* enemy[enemyNum];
     Block* block[blockNum];
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> disX(-130 * 30, 130 * 30);
+    std::uniform_int_distribution<int> disY(3, 16);
+    std::uniform_int_distribution<int> dis(0, 1000000);
+
     //give random position
     for (int i = 0; i < enemyNum; i++) {
-        enemy[i] = new Enemy(3, 3, rand() % 130, 3 + rand() % 15, 5, 4, enemyCharacter.front);
+        enemy[i] = new Enemy(3, 3, disX(gen), disY(gen), 5, 4, enemyCharacter.front);
     }
     for (int i = 0; i < blockNum; i++) {
-        int bx = rand() % 130;
-        int by = 3 + rand() % 15;
-        //block[i] = new Block(bx, by, 1 + rand() % (19 - by), 1 + rand() % 3);
-        block[i] = new Block(bx, by, 10, 5);
+        int bx = disX(gen);
+        int by = disY(gen);
+        block[i] = new Block(bx, by, 5 + dis(gen) % 10, dis(gen) % (17 - by) + 3);
     }
+
     //play
     while (1) {
+        time++;
         display.clearDisplay();
         //get input
         ch = getch();
@@ -69,12 +77,19 @@ void stage1Page() {
         }
         
         if (!player.isBlock(block, blockNum, direction)) {
-            player.move(direction, enemy, enemyNum, block, blockNum);
+            player.move(direction, enemy, enemyNum, block, blockNum, playerCharacter);
         }
 
         //draw
         player.draw(&display);
-        for (int i = 0; i < enemyNum; i++) enemy[i] -> draw(&display);
+        for (int i = 0; i < enemyNum; i++) {
+            if (time % 70 == 0) {
+                if (pow((enemy[i] -> x - player.x), 2) + pow((enemy[i] -> y - player.y), 2) < 500) {
+                    enemy[i] -> move(player.x, player.y); //일정 시간마다 적이 움직임
+                }
+            }
+            enemy[i] -> draw(&display);
+        }
 
         display.printDisplay();
 

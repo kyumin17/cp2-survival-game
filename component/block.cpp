@@ -13,9 +13,9 @@ void Block::draw() {
     int c = x;
 
     //draw in display
-    for (int row = 0; row < height; row++) {
-        move(r + row, c);
-        for (int col = 0; col < width; col++) {
+    for (int row = 0; row < std::min(height, HEIGHT - r); row++) {
+        move(r + row, std::max(c, 0));
+        for (int col = std::max(c, 0); col < std::min(width + c, WIDTH); col++) {
             addch(ACS_CKBOARD);
         }
     }

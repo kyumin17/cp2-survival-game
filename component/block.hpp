@@ -1,5 +1,6 @@
 #pragma once
 #include <ncurses.h>
+#include <algorithm>
 #include "component.hpp"
 
 class Block {

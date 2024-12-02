@@ -1,6 +1,7 @@
 #pragma once
 #include <ncurses.h>
 #include "../etc/display.hpp"
+#include "../etc/character.hpp"
 
 class Component {
     public:

@@ -3,14 +3,14 @@
 Player::Player(int _hp, int _x, int _y, int _width, int _height, Cell** _image)
 : Component(_x, _y, _width, _height, _image) {
     hp = _hp;
-    for (int i = 0; i < 4; i++) {
-        state[i] = false;
-    }
+    state = FRONT;
 }
 
-void Player::move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], int& blockNum) {
+void Player::move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], int& blockNum, PlayerCharacter playerCharacter) {
     switch (direction) {
         case LEFT:
+            state = LEFT;
+            changeCharacter(playerCharacter.left);
             for (int i = 0; i < enemyNum; i++) {
                 enemy[i] -> x++;
             }
@@ -19,6 +19,8 @@ void Player::move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], 
             }
             break;
         case RIGHT:
+            state = RIGHT;
+            changeCharacter(playerCharacter.right);
             for (int i = 0; i < enemyNum; i++) {
                 enemy[i] -> x--;
             }
@@ -27,11 +29,21 @@ void Player::move(int direction, Enemy* enemy[], int& enemyNum, Block* block[], 
             }
             break;
         case BACK:
+            state = BACK;
+            changeCharacter(playerCharacter.back);
             if (3 <= y && y < 17) y++;
             break;
         case FRONT:
+            state = FRONT;
+            changeCharacter(playerCharacter.front);
             if (3 < y && y <= 17) y--;
             break;
+    }
+}
+
+void Player::attack(Bullet* bullet[], int& bulletNum) {
+    for (int i = 0; i < bulletNum; i++) {
+        
     }
 }
 
@@ -59,6 +71,7 @@ bool Player::isBlock(Block* block[], int& blockNum, int direction) {
         int by = block[i] -> y;
         int bw = block[i] -> width;
         int bh = block[i] -> height;
+        
         if (direction == LEFT && x == bx + bw - 1 && by - 2 <= y && y <= by + bh - 1) {
             return 1;
         } else if (direction == RIGHT && x + 4 == bx && by - 2 <= y && y <= by + bh - 1) {
@@ -67,8 +80,7 @@ bool Player::isBlock(Block* block[], int& blockNum, int direction) {
             return 1;
         } else if (direction == FRONT && y == by + bh && bx - 3 <= x && x <= bx + bw - 2) {
             return 1;
-        } else {
-            return 0;
         }
     }
+    return 0;
 }

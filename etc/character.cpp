@@ -5,14 +5,14 @@ PlayerCharacter::PlayerCharacter() {
         "     ",
         " :o  ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
     char rightTxt[4][6] = {
         "     ",
         "  o: ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
 
@@ -20,7 +20,7 @@ PlayerCharacter::PlayerCharacter() {
         "  .  ",
         "  o  ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
     char frontTxt[4][6] = {
@@ -89,6 +89,6 @@ BulletShape::BulletShape() {
     bullet = new Cell*[1];
     bullet[0] = new Cell[1];
 
-    bullet[0][0].value = '+';
+    bullet[0][0].value = '*';
     bullet[0][0].color = COLOR_WHITE;
 }
