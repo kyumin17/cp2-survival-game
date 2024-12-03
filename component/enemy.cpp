@@ -5,3 +5,17 @@ Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** 
     hp = _hp;
     str = _str;
 }
+
+void Enemy::move(int playerX, int playerY, int** map) {
+    if (x < playerX) {
+        x++;
+    } else if (x > playerX) {
+        x--;
+    }
+
+    if (y < playerY) {
+        y++;
+    } else if (y > playerY) {
+        y--;
+    }
+}

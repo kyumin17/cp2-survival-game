@@ -1,13 +1,18 @@
 #pragma once
+#include <vector>
 #include "component.hpp"
+#include "bullet.hpp"
+#include "block.hpp"
 
-enum State { LEFT, RIGHT, BACK, FRONT, ATTACK };
+using namespace std;
 
 class Player: public Component {
     public:
         int hp;
-        Cell** image;
-        bool state[5];
-        int stateDuration[5];
-        Player(int _hp, int _x, int _y, int _width, int _height, Cell** _character);
+        int direction;
+        Player(int _x, int _y, int _width, int _height, Cell** _character);
+        void move(int input, vector<Enemy*>& enemy, vector<Block*>& block, vector<Bullet*>& bullet, PlayerCharacter playerCharacter);
+        void attack(vector<Bullet*>& bullet);
+        bool isTouch(vector<Enemy*>& enemy);
+        bool isBlock(vector<Block*>& block, int input);
 };

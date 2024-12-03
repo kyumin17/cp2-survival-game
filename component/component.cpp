@@ -36,8 +36,20 @@ void Component::draw(Display* display) {
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
             if (character[row][col].value == ' ') continue;
-            display -> screen[row + r][col + c].value = character[row][col].value;
-            display -> screen[row + r][col + c].color = character[row][col].color;
+            int nr = row + r;
+            int nc = col + c;
+            if (0 <= nr && nr < HEIGHT && 0 <= nc && nc < WIDTH) { //화면 밖으로 나갈 시 출력X
+                display -> screen[row + r][col + c].value = character[row][col].value;
+                display -> screen[row + r][col + c].color = character[row][col].color;
+            }
         }
     }
 }
+
+bool Component::isEndOfDisplay() {
+    if (x <= 0 || x + width >= WIDTH - 1 || y <= 3 || y + height >= 19) {
+        return 1;
+    } else {
+        return 0;
+    }
+} 

@@ -5,14 +5,14 @@ PlayerCharacter::PlayerCharacter() {
         "     ",
         " :o  ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
     char rightTxt[4][6] = {
         "     ",
         "  o: ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
 
@@ -20,7 +20,7 @@ PlayerCharacter::PlayerCharacter() {
         "  .  ",
         "  o  ",
         " /|\\ ",
-        " / \\"
+        " / \\ "
     };
 
     char frontTxt[4][6] = {
@@ -61,15 +61,14 @@ PlayerCharacter::PlayerCharacter() {
 }
 
 EnemyCharacter::EnemyCharacter() {
-    char frontTxt[4][6] = {
-        "     ",
-        "  #  ",
-        " /|\\ ",
-        " / \\ "
+    char frontTxt[3][4] = {
+        " # ",
+        "/|\\",
+        "/ \\"
     };
 
-    int row = 4;
-    int col = 5;
+    int row = 3;
+    int col = 3;
 
     front = new Cell*[row];
 
@@ -89,6 +88,6 @@ BulletShape::BulletShape() {
     bullet = new Cell*[1];
     bullet[0] = new Cell[1];
 
-    bullet[0][0].value = '+';
+    bullet[0][0].value = '*';
     bullet[0][0].color = COLOR_WHITE;
 }

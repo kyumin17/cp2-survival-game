@@ -7,21 +7,45 @@ Bullet::Bullet(int _str, int _direction, int _x, int _y, int _width, int _height
 }
 
 void Bullet::move() {
-    x++;
-}
-
-void Bullet::attack() {
-
-}
-
-bool Bullet::isTouched() {
-
-}
-
-bool Bullet::isEndOfDisplay() {
-    if (x <= 0 || x >= HEIGHT - 1 || y <= 0 || y >= WIDTH - 1) {
-        return 1;
-    } else {
-        return 0;
+    switch (direction) {
+        case LEFT:
+            x--;
+            break;
+        case RIGHT:
+            x++;
+            break;
+        case BACK:
+            y++;
+            break;
+        case FRONT:
+            y--;
+            break;
     }
-} 
+}
+
+int Bullet::isTouched(vector<Enemy*>& enemy) {
+    for (size_t i = 0; i < enemy.size(); i++) {
+        int ex = enemy[i] -> x;
+        int ey = enemy[i] -> y;
+        if (ex <= x && x <= ex + 2 && ey <= y && y <= ey + 2) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+bool Bullet::isBlock(vector<Block*>& block) {
+    for (size_t i = 0; i < block.size(); i++) {
+        int bx = block[i] -> x;
+        int by = block[i] -> y;
+        for (int r = 0; r < block[i] -> height; r++) {
+            for (int c = 0; c < block[i] -> width; c++) {
+                if (x == c + bx && y == r + by) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
