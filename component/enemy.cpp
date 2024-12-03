@@ -6,7 +6,7 @@ Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** 
     str = _str;
 }
 
-void Enemy::move(int playerX, int playerY) {
+void Enemy::move(int playerX, int playerY, int** map) {
     if (x < playerX) {
         x++;
     } else if (x > playerX) {

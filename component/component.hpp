@@ -3,6 +3,8 @@
 #include "../etc/display.hpp"
 #include "../etc/character.hpp"
 
+enum Direction { LEFT, RIGHT, BACK, FRONT };
+
 class Component {
     public:
         int x;

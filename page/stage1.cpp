@@ -2,6 +2,8 @@
 #define MAXBULLET 300
 #define MAXBLOCK 1000
 
+using namespace std;
+
 void stage1Clear() {
     char ch;
     while (ch != '\n') {
@@ -22,7 +24,7 @@ void stage1Fail() {
     }
 }
 
-void createMap(Block* block[], int &blockNum) {
+void createBlock(vector<Block*>& block) {
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -47,27 +49,27 @@ void createMap(Block* block[], int &blockNum) {
         //예외처리
         if (blockY == 1 && blockHeight == 15) {
             continue;
-        } else if (63 <= blockX && blockX <= 68) {
+        } else if (55 <= blockX && blockX <= 75) {
             continue;
         }
 
-        block[blockNum++] = new Block(blockX, blockY * 3, 2, blockHeight);
+        block.push_back(new Block(blockX, blockY * 3, 2, blockHeight));
         int blockPos = dis(gen) % blockHeight + blockY * 3;
 
-        //맨 위, 아래에는 block 뻗어나가지 않도록
+        //맨 위, 아래에는 block 가로 블럭이 생기지 않도록
         if (blockPos == 3) {
             blockPos++;
         } else if (blockPos == 17) {
             blockPos--;
         }
 
-        if (boolean(gen)) { //50%확률로 뻗어나오지 않음
+        if (boolean(gen)) { //50%확률로 가로 블럭이 생기지 않음
             if (boolean(gen)) { //block 왼쪽으로
                 int blockWidth = std::max(dis(gen) % (leftGap - 6), 3);
-                block[blockNum++] = new Block(blockX - blockWidth, blockPos, blockWidth, 1);
+                block.push_back(new Block(blockX - blockWidth, blockPos, blockWidth, 1));
             } else { //block 오른쪽으로
                 int blockWidth = std::max(dis(gen) % (rightGap - 6), 3);
-                block[blockNum++] = new Block(blockX + 2, blockPos, blockWidth, 1);
+                block.push_back(new Block(blockX + 2, blockPos, blockWidth, 1));
             }
         }
     }
@@ -86,7 +88,7 @@ bool isOverlap(Block* block, int ex, int ey) {
     }
 }
 
-void createEnemy(Enemy* enemy[], int& enemyNum, Block* block[], int &blockNum, EnemyCharacter enemyCharacter) {
+void createEnemy(vector<Enemy*>& enemy, vector<Block*> block, EnemyCharacter enemyCharacter) {
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -94,15 +96,14 @@ void createEnemy(Enemy* enemy[], int& enemyNum, Block* block[], int &blockNum, E
     std::uniform_int_distribution<int> disY(3, 15);
 
     //적 생성
-    int i = 0;
-    while (i < enemyNum) {
+    for (int i = 0; i < 300; i++) {
         int ex = disX(gen);
         int ey = disY(gen);
 
         //예외처리
         bool isValidPos = true;
         if (65 <= ex && ex <= 75) isValidPos = false; //플레이어 근방
-        for (int j = 0; j < blockNum; j++) { //block과 만남
+        for (size_t j = 0; j < block.size(); j++) { //block과 만남
             if (isOverlap(block[j], ex, ey)) {
                 isValidPos = false;
                 break;
@@ -111,8 +112,26 @@ void createEnemy(Enemy* enemy[], int& enemyNum, Block* block[], int &blockNum, E
 
         if (!isValidPos) continue;
 
-        enemy[i] = new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.front);
-        i++;
+        enemy.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.front));
+    }
+}
+
+void getMap(int** map, vector<Block*> block) {
+    //갈 수 있다면 1, 갈 수 없다면 0
+    for (int i = 0; i < 17; i++) {
+        for (int j = 0; j < 130 * 30 * 2 + 1; j++) {
+            map[i][j] = 0;
+        }
+    }
+
+    for (size_t i = 0; i < block.size(); i++) {
+        for (int r = 0; r < block[i] -> height; r++) {
+            for (int c = 0; c < block[i] -> width; c++) {
+                int mr = r + (block[i] -> y) - 3;
+                int mc = c + (block[i] -> x) + 130 * 30;
+                map[mr][mc] = 1;
+            }
+        }
     }
 }
 
@@ -137,7 +156,6 @@ int getDirection(char ch) {
 
 void stage1Page() {
     char ch;
-    int direction = -1;
     int isClear = false;
     long long time = 0;
 
@@ -147,54 +165,76 @@ void stage1Page() {
     EnemyCharacter enemyCharacter;
     Player player(65, 10, 5, 4, playerCharacter.front);
 
-    int enemyNum = 300;
-    int blockNum = 0;
-    int bulletNum = 0;
-    Enemy* enemy[enemyNum];
-    Block* block[MAXBLOCK];
-    Bullet* bullet[MAXBULLET];
+    vector<Enemy*> enemy;
+    vector<Block*> block;
+    vector<Bullet*> bullet;
 
-    createMap(block, blockNum);
-    createEnemy(enemy, enemyNum, block, blockNum, enemyCharacter);
+    int** map = new int*[17];
+    for (int i = 0; i < 17; i++) {
+        map[i] = new int[130 * 30 * 2 + 1];
+    }
+
+    createBlock(block);
+    createEnemy(enemy, block, enemyCharacter);
+    getMap(map, block);
 
     //게임
     while (1) {
         time++;
         display.clearDisplay();
         ch = getch();
-        direction = getDirection(ch);
+        int input = getDirection(ch);
         
-        if (!player.isBlock(block, blockNum, direction)) {
-            player.move(direction, enemy, enemyNum, block, blockNum, playerCharacter);
+        if (!player.isBlock(block, input)) {
+            player.move(input, enemy, block, bullet, playerCharacter);
         }
 
-        //draw
+        //플레이어 출력
         player.draw(&display);
-        player.attack(bullet, bulletNum);
-        for (int i = 0; i < enemyNum; i++) {
+        if (ch == 'i') {
+            player.attack(bullet);
+        }
+        
+        //적 출력
+        for (size_t i = 0; i < enemy.size(); i++) {
             if (time % 70 == 0) {
-                if (pow((enemy[i] -> x - player.x), 2) + pow((enemy[i] -> y - player.y), 2) < 500) {
-                    enemy[i] -> move(player.x, player.y); //일정 시간마다 적이 움직임
+                if (pow((enemy[i] -> x - player.x), 2) + pow((enemy[i] -> y - player.y), 2) < 900) {
+                    enemy[i] -> move(player.x, player.y, map); //일정 시간마다 적이 움직임
                 }
             }
             enemy[i] -> draw(&display);
         }
 
-        for (int i = 0; i < bulletNum; i++) {
-            bullet[i] -> draw(&display);
-            bullet[i] -> move();
+        //플레이어 총알 출력
+        for (size_t i = 0; i < bullet.size(); i++) {
+            int enemyIdx = bullet[i] -> isTouched(enemy); //공격한 적 인덱스
+            if (enemyIdx != -1) { //적 만나면 총알 사라짐
+                enemy.erase(enemy.begin() + enemyIdx);
+                bullet.erase(bullet.begin() + i);
+            } else if (bullet[i] -> isBlock(block)) { //블럭 만나면 총알 사라짐
+                bullet.erase(bullet.begin() + i);
+            } else if (bullet[i] -> isEndOfDisplay()) { //화면 나가면 총알 사라짐
+                bullet[i] -> draw(&display);
+                bullet.erase(bullet.begin() + i);
+            } else {
+                bullet[i] -> draw(&display);
+            }
+            
+            if (time % 2 == 0) {
+                bullet[i] -> move();
+            }
         }
 
         display.printDisplay();
 
-        //draw block
-        for (int i = 0; i < blockNum; i++) {
+        //block 출력
+        for (size_t i = 0; i < block.size(); i++) {
             block[i] -> draw();
         }
 
         //적에 닿으면 죽음
-        if (player.isTouch(enemy, enemyNum)) {
-            //break;
+        if (player.isTouch(enemy)) {
+            break;
         }
 
         //q누르면 종료 페이지 띄움
