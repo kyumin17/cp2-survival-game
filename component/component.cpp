@@ -47,7 +47,7 @@ void Component::draw(Display* display) {
 }
 
 bool Component::isEndOfDisplay() {
-    if (x <= 0 || x + width >= WIDTH - 1 || y <= 3 || y + height >= 19) {
+    if (x <= 0 || x + width >= WIDTH - 1 || y <= 0 || y + height >= HEIGHT - 1) {
         return 1;
     } else {
         return 0;

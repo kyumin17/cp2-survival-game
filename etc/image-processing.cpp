@@ -60,12 +60,12 @@ void Image::readImage() {
 }
 
 int Image::getColor(int r, int g, int b) {
-	int colorValue[12][3] = {{0, 0, 0}, {255, 0, 0}, {0, 255, 0}, {255, 255, 0}, {0, 0, 255}, {255, 0, 255}, {0, 255, 255}, 
-	{255, 255, 255}, {0, 0, 0}, {255, 126, 46}, {116, 168, 252}, {67, 199, 113}};
+	int colorValue[9][3] = {{0, 0, 0}, {255, 0, 0}, {0, 255, 0}, {255, 255, 0}, {0, 0, 255}, {255, 0, 255}, {0, 255, 255}, 
+	{255, 255, 255}, {0, 0, 0}};
 	int minDiff = 255 * 255 * 3;
 	int minDiffColor = -1;
 
-	for (int i = 1; i < 12; i++) {
+	for (int i = 1; i < 9; i++) {
 		int diff = pow(r - colorValue[i][0], 2) + pow(g - colorValue[i][1], 2) + pow(b - colorValue[i][2], 2);
 		if (diff < minDiff) {
 			minDiff = diff;

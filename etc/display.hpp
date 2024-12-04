@@ -14,5 +14,4 @@ class Display {
         Display();
         void printDisplay(); //draw display in screen
         void clearDisplay();
-        void printBackgroud();
 };
