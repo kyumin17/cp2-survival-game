@@ -4,18 +4,21 @@ Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** 
 : Component(_x, _y, _width, _height, _character) {
     hp = _hp;
     str = _str;
+    isTracking = false;
 }
 
-void Enemy::move(int playerX, int playerY, int** map) {
-    if (x < playerX) {
-        x++;
-    } else if (x > playerX) {
-        x--;
-    }
+void Enemy::move(int playerX, int playerY) {
+    if (isTracking) {
+        if (x < playerX) {
+            x++;
+        } else if (x > playerX) {
+            x--;
+        }
 
-    if (y < playerY) {
-        y++;
-    } else if (y > playerY) {
-        y--;
+        if (y < playerY) {
+            y++;
+        } else if (y > playerY) {
+            y--;
+        }
     }
 }

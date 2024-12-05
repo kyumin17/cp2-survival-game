@@ -11,24 +11,15 @@ int main() {
 	start_color();
     init_color(9, 100, 100, 100); //dark grey
 
-    int stage;
-    if (startPage()) {
-        clear();
-        stage = selectStagePage();
+    while (startPage()) {
+        do {
+            clear();
+            playPage(); //게임 플레이
+            clear();
+        } while(endPage());
     }
 
     clear();
-    switch (stage) {
-        case 1:
-            stage1Page();
-            break;
-        case 2:
-            stage2Page();
-            break;
-        case 3:
-            stage3Page();
-            break;
-    }
 
     endwin();
 }
