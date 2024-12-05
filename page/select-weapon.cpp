@@ -6,6 +6,8 @@ int selectWeaponPage() {
     */
     char ch = getch();
     while (1) {
+        printw("arrow(1)\n pole(2)\n disk(3)");
+
         if (ch == '1') {
             return 0;
         } else if (ch == '2') {

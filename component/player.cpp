@@ -5,7 +5,7 @@ Player::Player(int _x, int _y, int _width, int _height, Cell** _image)
     direction = FRONT;
 }
 
-void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, vector<Weapon*>& weaponArr, PlayerCharacter playerCharacter) {
+void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, PlayerCharacter playerCharacter) {
     /*
     플레이어의 움직임에 따라 배경을 움직인다.
     */
@@ -43,36 +43,6 @@ void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr,
         (blockArr[i] -> x) += dx;
         (blockArr[i] -> y) += dy;
     }
-    for (size_t i = 0; i < weaponArr.size(); i++) {
-        (weaponArr[i] -> x) += dx;
-        (weaponArr[i] -> y) += dy;
-    }
-}
-
-void Player::attack(vector<Weapon*>& weaponArr) {
-    BulletShape bulletShape;
-    int dx, dy;
-
-    switch (direction) {
-        case LEFT:
-            dx = 0;
-            dy = 1;
-            break;
-        case RIGHT:
-            dx = 4;
-            dy = 1;
-            break;
-        case BACK:
-            dx = 2;
-            dy = 3;
-            break;
-        case FRONT:
-            dx = 2;
-            dy = -1;
-            break;
-    }
-
-    weaponArr.push_back(new Weapon(1, direction, x + dx, y + dy, 1, 1, bulletShape.bullet));
 }
 
 bool Player::isTouch(vector<Enemy*>& enemyArr) {
@@ -98,15 +68,16 @@ bool Player::isBlock(vector<Block*>& blockArr, int input) {
         int by = blockArr[i] -> y;
         int bh = blockArr[i] -> height;
         
-        if (input == LEFT && x == bx + bh * 2 - 1 && by - 2 <= y && y <= by + bh - 1) {
+        if (input == LEFT && x == bx + bh * 2 && by - 2 <= y && y <= by + bh - 1) {
             return 1;
-        } else if (input == RIGHT && x + 4 == bx && by - 2 <= y && y <= by + bh - 1) {
+        } else if (input == RIGHT && x + 3 == bx && by - 2 <= y && y <= by + bh - 1) {
             return 1;
-        } else if (input == BACK && y + 3 == by && bx - 3 <= x && x <= bx + bh * 2 - 2) {
+        } else if (input == BACK && y + 3 == by && bx - 3 <= x && x <= bx + bh * 2 - 1) {
             return 1;
-        } else if (input == FRONT && y == by + bh && bx - 3 <= x && x <= bx + bh * 2 - 2) {
+        } else if (input == FRONT && y == by + bh && bx - 3 <= x && x <= bx + bh * 2 - 1) {
             return 1;
         }
     }
+    
     return false;
 }

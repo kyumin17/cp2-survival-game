@@ -22,3 +22,11 @@ void Block::draw() {
         }
     }
 }
+
+bool Block::isOverlap(int cx, int cy) {
+    if (x <= cx + 2 && cx <= x + height * 2 - 1 && y <= cy + 2 && cy <= y + height - 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
