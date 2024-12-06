@@ -146,7 +146,7 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
 
 /*막대기*/
 Pole::Pole(int _x, int _y, Cell** _character)
-: Weapon(_x, _y, 5, 6, 10, _character) {
+: Weapon(_x, _y, 5, 6, 20, _character) {
     direction = RIGHT;
 }
 
@@ -171,7 +171,7 @@ void Pole::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
         int ew = enemyArr[i] -> width;
         int eh = enemyArr[i] -> height;
 
-        if (y <= ey + eh && ey <= y + height && x <= ex + ew && ex <= x + width) {
+        if (y <= ey + eh - 1 && ey <= y + height - 1 && x <= ex + ew - 1 && ex <= x + width - 1) {
             enemyArr.erase(enemyArr.begin() + i);
         }
     }

@@ -69,13 +69,13 @@ bool Player::isBlock(vector<Block*>& blockArr, int input) {
         int bh = blockArr[i] -> height;
         
         if (input == LEFT && x == bx + bh * 2 && by - 2 <= y && y <= by + bh - 1) {
-            return 1;
+            return true;
         } else if (input == RIGHT && x + 3 == bx && by - 2 <= y && y <= by + bh - 1) {
-            return 1;
+            return true;
         } else if (input == BACK && y + 3 == by && bx - 3 <= x && x <= bx + bh * 2 - 1) {
-            return 1;
+            return true;
         } else if (input == FRONT && y == by + bh && bx - 3 <= x && x <= bx + bh * 2 - 1) {
-            return 1;
+            return true;
         }
     }
     

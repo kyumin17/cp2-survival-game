@@ -13,7 +13,9 @@ class PlayerCharacter {
 
 class EnemyCharacter {
     public:
-        Cell** front;
+        Cell** enemy1;
+        Cell** enemy2;
+        Cell** enemy3;
         EnemyCharacter();
 };
 

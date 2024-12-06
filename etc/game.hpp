@@ -36,6 +36,7 @@ class Game {
         void createEnemy();
         void draw();
         void moveEnemy();
+        bool isEnemy(int idx);
         void movePlayer(int direction);
         void changeWeapon(int type);
         void updateWeapon(int input);

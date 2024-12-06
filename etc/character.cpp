@@ -59,7 +59,7 @@ PlayerCharacter::PlayerCharacter() {
 }
 
 EnemyCharacter::EnemyCharacter() {
-    char frontTxt[3][4] = {
+    char enemy1Txt[3][4] = {
         " # ",
         "/|\\",
         "/ \\"
@@ -68,16 +68,16 @@ EnemyCharacter::EnemyCharacter() {
     int row = 3;
     int col = 3;
 
-    front = new Cell*[row];
+    enemy1 = new Cell*[row];
 
     for (int i = 0; i < row; i++) {
-        front[i] = new Cell[col];
+        enemy1[i] = new Cell[col];
     }
 
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            front[i][j].value = frontTxt[i][j];
-            front[i][j].color = COLOR_GREEN;
+            enemy1[i][j].value = enemy1Txt[i][j];
+            enemy1[i][j].color = COLOR_GREEN;
         }
     }
 }
