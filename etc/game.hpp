@@ -23,8 +23,8 @@ class Game {
         PlayerCharacter playerCharacter;
         EnemyCharacter enemyCharacter;
         BowShape bowShape;
-        // PoleShape poleShape;
-        // DiskShape diskShape;
+        PoleShape poleShape;
+        DiskShape diskShape;
 
         int time;
         int score;

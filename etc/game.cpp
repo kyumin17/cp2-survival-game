@@ -4,6 +4,8 @@ Game::Game() {
     weaponType = 1;
     player = new Player(65, 14, 3, 3, playerCharacter.front);
     bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
+    pole = new Pole(player -> x + 3, player -> y - 2, poleShape.poleRight[0]);
+    disk = new Disk(player -> x + 3, player -> y + 1, diskShape.disk);
     time = 0;
     score = 0;
     end = false;
@@ -79,15 +81,22 @@ void Game::createEnemy() {
 }
 
 void Game::draw() {
+    /*
+    오브젝트들을 화면에 출력
+    */
     player -> draw(&display);
     
-    if (weaponType == 1) {
-        bow -> draw(&display);
-        bow -> drawArrows(&display);
-    } else if (weaponType == 2) {
-
-    } else {
-        
+    switch(weaponType) {
+        case 1:
+            bow -> draw(&display);
+            bow -> drawArrows(&display);
+            break;
+        case 2:
+            pole -> draw(&display);
+            break;
+        case 3:
+            disk -> draw(&display);
+            break;
     }
 
     for (size_t i = 0; i < enemyArr.size(); i++) {
@@ -143,19 +152,58 @@ void Game::updateWeapon(int input) {
                 }
             }
             if (time % 10 == 0) {
+                if (bow -> attackTime != 0) bow -> attackTime++;
                 bow -> moveArrows();
                 bow -> checkCollision(enemyArr, blockArr);
+                if (bow -> attackTime == bow -> cooldown) {
+                    bow -> attackTime = 0;
+                }
             }
             break;
         case 2:
+            pole -> changePoleDirection(player -> direction, player -> x);
+            if (time % 5 == 0) {
+                if (pole -> attackTime != 0) {
+                    pole -> attack(player -> direction, player -> x, enemyArr);
+                    pole -> attackTime++;
+                }
+                if (pole -> attackTime == pole -> cooldown) {
+                    pole -> attackTime = 0;
+                }
+            }
             break;
         case 3:
+            if (time % 10 == 0) {
+                if (disk -> attackTime != 0) {
+                    disk -> attack(player -> direction);
+                    disk -> attackTime++;
+                }
+                if (disk -> attackTime == disk -> cooldown) {
+                    disk -> attackTime = 0;
+                }
+            }
             break;
     }
 }
 
 void Game::attack() {
-    if (weaponType == 1) {
-        bow -> attack(player -> direction);
+    switch(weaponType) {
+        case 1:
+            if (bow -> attackTime == 0) {
+                bow -> attackTime = 1;
+                bow -> attack(player -> direction);
+            }
+            break;
+        case 2:
+            if (pole -> attackTime == 0) {
+                pole -> attackTime = 1;
+            }
+            break;
+        case 3:
+            if (disk -> attackTime == 0) {
+                disk -> attackTime = 1;
+                disk -> attack(player -> direction);
+            }
+            break;
     }
 }

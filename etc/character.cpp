@@ -239,8 +239,10 @@ PoleShape::PoleShape() {
     //동적할당
     for (int i = 0; i < 5; i++) {
         poleRight[i] = new Cell*[row];
+        poleLeft[i] = new Cell*[row];
         for (int j = 0; j < 6; j++) {
             poleRight[i][j] = new Cell[col];
+            poleLeft[i][j] = new Cell[col];
         }
     }
     
@@ -272,7 +274,7 @@ PoleShape::PoleShape() {
 }
 
 DiskShape::DiskShape() {
-    Cell** disk = new Cell*[1];
+    disk = new Cell*[1];
     disk[0] = new Cell[1];
     disk[0][0].value = 'O';
     disk[0][0].color = COLOR_YELLOW;

@@ -35,6 +35,15 @@ int playPage() {
             case 'o':
                 game.weaponType = selectWeaponPage();
                 break;
+            case '1':
+                game.changeWeapon(1);
+                break;
+            case '2':
+                game.changeWeapon(2);
+                break;
+            case '3':
+                game.changeWeapon(3);
+                break;
         }
 
         game.end = game.player -> isTouch(game.enemyArr);

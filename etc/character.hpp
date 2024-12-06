@@ -1,5 +1,6 @@
 #pragma once
 #include "../component/component.hpp"
+#include <vector>
 
 class PlayerCharacter {
     public:
