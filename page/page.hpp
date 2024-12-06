@@ -12,10 +12,10 @@ int selectStagePage();
 
 void stage1Page();
 
-void stage2Page();
-
-void stage3Page();
-
-void endingPage();
+int endingPage();
 
 int checkQuitPage();
+
+int checkQuitStage();
+
+int checkQuitStart();

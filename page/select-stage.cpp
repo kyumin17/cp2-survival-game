@@ -5,21 +5,24 @@
 #define HEIGHT 30
 #define ms 1000
 
-int selectStagePage() {
+int selectStagePage(){
     char ch;
+    int selectStage = 1;
     while (1) {
         usleep(10 * ms);
-        int selectStage = 1;
-
-        for (int x = 0; x < WIDTH; x++) {
-            mvprintw(0, x, "-");
-            mvprintw( HEIGHT - 1, x, "-");
+        
+        for (int x = 0; x < WIDTH; x+=2) {
+            mvprintw(0, x, "-=");
+            mvprintw( HEIGHT - 1, x, "-=");
         }
-        for(int y = 0; y < HEIGHT; y++) {
+        for(int y = 0; y < HEIGHT; y+=2) {
             mvprintw(y, 0, "|");
             mvprintw(y, WIDTH - 1, "|");
         }
-
+        for(int y = 0; y < HEIGHT; y+=3) {
+            mvprintw(y, 0, ":");
+            mvprintw(y, WIDTH - 1, ":");
+        }
         ch = getch();
 
         mvprintw(26, 37, "  o  \\ o / _ o       __|   \\ /    |__      o _ \\ o /  o");
@@ -55,6 +58,19 @@ int selectStagePage() {
 
         init_pair(1, COLOR_CYAN, COLOR_BLACK);
         
+        switch (ch) {
+            case 'w':
+                if(selectStage != 1) {
+                    selectStage--;
+                }
+                break;
+            case 's':
+                if(selectStage != 4) {
+                    selectStage++;
+                }
+                break;
+        }
+
         switch (selectStage) {
             case 1:
                 attron(COLOR_PAIR(1));
@@ -62,6 +78,7 @@ int selectStagePage() {
                 attroff(COLOR_PAIR(1));
                 mvprintw(15, 61, "  Stage 2");
                 mvprintw(17, 61, "  Stage 3");
+                mvprintw(19, 61, "  Back");
                 break;
             case 2:
                 mvprintw(13, 61, "  Stage 1");
@@ -69,6 +86,7 @@ int selectStagePage() {
                 mvprintw(15, 61, "> Stage 2");
                 attroff(COLOR_PAIR(1));
                 mvprintw(17, 61, "  Stage 3");
+                mvprintw(19, 61, "  Back");
                 break;
             case 3:
                 mvprintw(13, 61, "  Stage 1");
@@ -76,17 +94,42 @@ int selectStagePage() {
                 attron(COLOR_PAIR(1));
                 mvprintw(17, 61, "> Stage 3");
                 attroff(COLOR_PAIR(1));
+                mvprintw(19, 61, "  Back");
                 break;
+            case 4:
+                mvprintw(13, 61, "  Stage 1");
+                mvprintw(15, 61, "  Stage 2");
+                mvprintw(17, 61, "  Stage 3");
+                attron(COLOR_PAIR(1));
+                mvprintw(19, 61, "> Back");
+                attroff(COLOR_PAIR(1));
+
         }
         
         if (ch == '\n') {
-            return 1; //play game
-        } else if (ch == 'q') {
-            if (checkQuitPage()) {
-                return 0; //end game
+            if(selectStage == 1) {
+                clear();
+                refresh();
+                return selectStage;
+            } else if(selectStage == 4) {
+                clear();
+                refresh();
+                return startPage();
             } else {
-                return 1; //back to game
+                clear();
+                refresh();
+                return selectStage; //play game 
             }
+            
         }
+        //  else if (ch == 'q') {
+        //     clear();
+        //     refresh();
+        //     if (checkQuitPage()) {
+        //         return 0; //end game
+        //     } else {
+        //         return selectStagePage(); //back to game
+        //     }
+        // }
     }
 }
