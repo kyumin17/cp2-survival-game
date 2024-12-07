@@ -15,6 +15,7 @@ class Enemy: public Component {
         int dx;
         int dy;
         Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character);
-        void move(int playerX, int playerY, vector<Block*>& blockArr);
+        void moveX(int playerX, int playerY, vector<Block*>& blockArr);
+        void moveY(int playerX, int playerY, vector<Block*>& blockArr);
         bool isBlock(vector<Block*>& blockArr);
 };

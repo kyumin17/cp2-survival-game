@@ -5,7 +5,7 @@ Game::Game() {
     player = new Player(65, 14, 3, 3, playerCharacter.front);
     bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
     pole = new Pole(player -> x + 3, player -> y - 2, poleShape.poleRight[0]);
-    disk = new Disk(player -> x + 3, player -> y + 1, diskShape.disk);
+    eraser = new Eraser(player -> x - 2, player -> y - 1, eraserShape.eraserNonactive);
     time = 0;
     score = 0;
     end = false;
@@ -49,15 +49,15 @@ void Game::createMap() {
     }
 }
 
-void Game::createEnemy() {
+void Game::createEnemy(int createNum) {
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> disX(0, 130);
-    std::uniform_int_distribution<int> disY(0, 30);
+    std::uniform_int_distribution<int> disX(-30, 160);
+    std::uniform_int_distribution<int> disY(-30, 60);
 
     //적 생성
-    for (int i = 0; i < 60; i++) {
+    for (int i = 0; i < createNum; i++) {
         int ex = disX(gen); //적 x좌표
         int ey = disY(gen); //적 y좌표
 
@@ -76,7 +76,15 @@ void Game::createEnemy() {
         if (!isValidPos) continue;
 
         //적 생성
-        enemyArr.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.enemy1));
+        if (i < createNum / 4) {
+            enemyArr.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.enemy1));
+        } else if (i < createNum / 2) {
+            enemyArr.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.enemy2));
+        } else if (i < createNum * 3 / 4) {
+            enemyArr.push_back(new Enemy(3, 3, ex, ey, 4, 1, enemyCharacter.enemy3));
+        } else {
+            enemyArr.push_back(new Enemy(3, 3, ex, ey, 4, 2, enemyCharacter.enemy4));
+        }
     }
 }
 
@@ -95,7 +103,7 @@ void Game::draw() {
             pole -> draw(&display);
             break;
         case 3:
-            disk -> draw(&display);
+            eraser -> draw(&display);
             break;
     }
 
@@ -113,12 +121,13 @@ void Game::draw() {
 void Game::moveEnemy() {
     for (size_t i = 0; i < enemyArr.size(); i++) {
         if (time % 20 == 0) {
-            if (pow((enemyArr[i] -> x - player -> x), 2) + pow((enemyArr[i] -> y - player -> y), 2) < 1600) { //일정 거리 이내로 들어오면 적이 플레이어 따라옴
-                enemyArr[i] -> isTracking = true;
-            }
-            enemyArr[i] -> move(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
+            enemyArr[i] -> isTracking = true;
+            enemyArr[i] -> moveX(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
             if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 enemyArr[i] -> x -= enemyArr[i] -> dx;
+            }
+            enemyArr[i] -> moveY(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
+            if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 enemyArr[i] -> y -= enemyArr[i] -> dy;
             }
         }
@@ -206,12 +215,13 @@ void Game::updateWeapon(int input) {
             break;
         case 3:
             if (time % 10 == 0) {
-                if (disk -> attackTime != 0) {
-                    disk -> attack(player -> direction);
-                    disk -> attackTime++;
+                if (eraser -> attackTime != 0) {
+                    eraser -> attack(enemyArr);
+                    eraser -> attackTime++;
                 }
-                if (disk -> attackTime == disk -> cooldown) {
-                    disk -> attackTime = 0;
+                if (eraser -> attackTime == eraser -> cooldown) {
+                    eraser -> attackTime = 0;
+                    eraser -> changeCharacter(eraserShape.eraserNonactive);
                 }
             }
             break;
@@ -235,9 +245,9 @@ void Game::attack() {
             }
             break;
         case 3:
-            if (disk -> attackTime == 0) {
-                disk -> attackTime = 1;
-                disk -> attack(player -> direction);
+            if (eraser -> attackTime == 0) {
+                eraser -> attackTime = 1;
+                eraser -> attack(enemyArr);
             }
             break;
     }

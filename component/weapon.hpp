@@ -42,8 +42,8 @@ class Pole: public Weapon {
         void changePoleDirection(int direction, int playerX);
 };
 
-class Disk: public Weapon {
+class Eraser: public Weapon {
     public:
-        Disk(int _x, int _y, Cell** _character);
-        void attack(int direction);
+        Eraser(int _x, int _y, Cell** _character);
+        void attack(vector<Enemy*>& enemyArr);
 };

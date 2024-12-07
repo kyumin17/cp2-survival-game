@@ -18,13 +18,13 @@ class Game {
         int weaponType;
         Bow* bow;
         Pole* pole;
-        Disk* disk;
+        Eraser* eraser;
 
         PlayerCharacter playerCharacter;
         EnemyCharacter enemyCharacter;
         BowShape bowShape;
         PoleShape poleShape;
-        DiskShape diskShape;
+        EraserShape eraserShape;
 
         int time;
         int score;
@@ -33,7 +33,7 @@ class Game {
         Game();
         int getDirection(char ch);
         void createMap();
-        void createEnemy();
+        void createEnemy(int createNum);
         void draw();
         void moveEnemy();
         bool isEnemy(int idx);

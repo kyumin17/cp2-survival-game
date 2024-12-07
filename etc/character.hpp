@@ -16,6 +16,7 @@ class EnemyCharacter {
         Cell** enemy1;
         Cell** enemy2;
         Cell** enemy3;
+        Cell** enemy4;
         EnemyCharacter();
 };
 
@@ -39,8 +40,9 @@ class PoleShape {
         PoleShape();
 };
 
-class DiskShape {
+class EraserShape {
     public:
-        Cell** disk;
-        DiskShape();
+        Cell** eraserNonactive;
+        Cell** eraserActive;
+        EraserShape();
 };

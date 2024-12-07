@@ -137,7 +137,6 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
         int enemyIdx = arrowArr[i] -> isEnemy(enemyArr);
         if (enemyIdx != -1) {
             enemyArr.erase(enemyArr.begin() + enemyIdx);
-            arrowArr.erase(arrowArr.begin() + i);
         } else if (arrowArr[i] -> isBlock(blockArr)) {
             arrowArr.erase(arrowArr.begin() + i);
         }
@@ -146,7 +145,7 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
 
 /*막대기*/
 Pole::Pole(int _x, int _y, Cell** _character)
-: Weapon(_x, _y, 5, 6, 20, _character) {
+: Weapon(_x, _y, 5, 6, 5, _character) {
     direction = RIGHT;
 }
 
@@ -192,11 +191,22 @@ void Pole::changePoleDirection(int input, int playerX) {
 }
 
 /*원반*/
-Disk::Disk(int _x, int _y, Cell** _character)
-: Weapon(_x, _y, 1, 1, 5, _character) {
+Eraser::Eraser(int _x, int _y, Cell** _character)
+: Weapon(_x, _y, 7, 5, 5, _character) {
     
 }
 
-void Disk::attack(int direction) {
+void Eraser::attack(vector<Enemy*>& enemyArr) {
+    EraserShape eraserShape;
+    for (size_t i = 0; i < enemyArr.size(); i++) {
+        changeCharacter(eraserShape.eraserActive);
+        int ex = enemyArr[i] -> x;
+        int ey = enemyArr[i] -> y;
+        int ew = enemyArr[i] -> width;
+        int eh = enemyArr[i] -> height;
 
+        if (y <= ey + eh - 1 && ey <= y + height - 1 && x <= ex + ew - 1 && ex <= x + width - 1) {
+            enemyArr.erase(enemyArr.begin() + i);
+        }
+    }
 }

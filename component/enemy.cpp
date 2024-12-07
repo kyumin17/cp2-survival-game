@@ -9,11 +9,28 @@ Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** 
     direction = -1;
 }
 
-void Enemy::move(int playerX, int playerY, vector<Block*>& blockArr) {
+void Enemy::moveX(int playerX, int playerY, vector<Block*>& blockArr) {
     /*
     적이 플레이어 방향으로 움직임
     */
     dx = 0;
+    if (isTracking) {
+        if (x < playerX) {
+            direction = RIGHT;
+            dx = 1;
+        } else if (x > playerX) {
+            direction = LEFT;
+            dx = -1;
+        }
+
+        x += dx;
+    }
+}
+
+void Enemy::moveY(int playerX, int playerY, vector<Block*>& blockArr) {
+    /*
+    적이 플레이어 방향으로 움직임
+    */
     dy = 0;
     if (isTracking) {
         if (y < playerY) {
@@ -24,15 +41,6 @@ void Enemy::move(int playerX, int playerY, vector<Block*>& blockArr) {
             dy = -1;
         }
 
-        if (x < playerX) {
-            direction = RIGHT;
-            dx = 1;
-        } else if (x > playerX) {
-            direction = LEFT;
-            dx = -1;
-        }
-
-        x += dx;
         y += dy;
     }
 }
