@@ -122,14 +122,14 @@ int checkQuitStage() {
         switch (QuitStage) {
             case 1:
                 attron(COLOR_PAIR(1));
-                mvprintw(16, 55, "> Resume Game");
+                mvprintw(16, 55, "> Resume");
                 attroff(COLOR_PAIR(1));
-                mvprintw(18, 55, "  Return to Stage Selection");
+                mvprintw(18, 55, "  Home");
                 break;
             case 2:
-                mvprintw(16, 55, "  Resume Game");
+                mvprintw(16, 55, "  Resume");
                 attron(COLOR_PAIR(2));
-                mvprintw(18, 55, "> Return to Stage Selection");
+                mvprintw(18, 55, "> Home");
                 attroff(COLOR_PAIR(2));
                 break;
         }
@@ -196,7 +196,7 @@ int checkQuitStart() {
             if (QuitStart == 1) {
                 clear();
                 refresh();
-                return startPage(); //back to game
+                return 1; //back to game
             } else if (QuitStart == 2) {
                 return 0;
             }

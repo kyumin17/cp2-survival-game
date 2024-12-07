@@ -97,13 +97,12 @@ int startPage() {
 
         if (ch == '\n') {
             if (start == 1) {
-                clear();
-                refresh();
-                return playPage(); //back to game
+                return PLAY;
             } else if (start == 2) {
                 clear();
-                refresh();
-                return checkQuitStart();
+                if (!checkQuitStart()) {
+                    return QUIT;
+                }
             }
         }
     }

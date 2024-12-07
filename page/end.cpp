@@ -2,7 +2,7 @@
 #define WIDTH 130
 #define HEIGHT 30
 
-int endPage(int score) {
+int endPage() {
     /*
     retry라면 1을, quit이라면 0을 반환한다.
     */
@@ -127,21 +127,21 @@ int endPage(int score) {
                 attron(COLOR_PAIR(1));
                 mvprintw(18, 55, "> Restart");
                 attroff(COLOR_PAIR(1));
-                mvprintw(20, 55, "  Quit");
+                mvprintw(20, 55, "  Home");
                 break;
             case 2:
                 mvprintw(18, 55, "  Restart");
                 attron(COLOR_PAIR(2));
-                mvprintw(20, 55, "> Quit");
+                mvprintw(20, 55, "> Home");
                 attroff(COLOR_PAIR(2));
                 break;
         }
 
         if (ch == '\n') {
             if (endingPage == 1) {
-                return 1; //back to game
+                return PLAY; //재도전
             } else if (endingPage == 2) {
-                return 0;
+                return START; //시작페이지
             }
         }
 
