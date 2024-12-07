@@ -30,8 +30,12 @@ int playPage() {
             case 'i':
                 game.attack();
                 break;
-            case 'q':
-                if (checkQuitPage()) clear();
+            case 27:
+                clear();
+                if (checkQuitStage()) {
+                    clear();
+                    startPage();
+                }
                 break;
             case 'o':
                 game.weaponType = selectWeaponPage();
@@ -54,5 +58,5 @@ int playPage() {
 
     clear();
 
-    return game.score;
+    return END;
 }
