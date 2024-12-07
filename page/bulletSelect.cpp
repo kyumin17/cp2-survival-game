@@ -1,4 +1,6 @@
 #include "page.hpp"
+#define WIDTH 130
+#define HEIGHT 30
 
 int bulletSelectPage() {
     char ch;

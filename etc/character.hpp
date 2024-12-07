@@ -1,5 +1,6 @@
 #pragma once
 #include "../component/component.hpp"
+#include <vector>
 
 class PlayerCharacter {
     public:
@@ -12,12 +13,36 @@ class PlayerCharacter {
 
 class EnemyCharacter {
     public:
-        Cell** front;
+        Cell** enemy1;
+        Cell** enemy2;
+        Cell** enemy3;
+        Cell** enemy4;
         EnemyCharacter();
 };
 
-class BulletShape {
+class BowShape {
     public:
-        Cell** bullet;
-        BulletShape();
+        Cell** bowRight;
+        Cell** bowLeft;
+        Cell** bowDown;
+        Cell** bowUp;
+        Cell** arrowRight;
+        Cell** arrowLeft;
+        Cell** arrowDown;
+        Cell** arrowUp;
+        BowShape();
+};
+
+class PoleShape {
+    public:
+        Cell** poleRight[5];
+        Cell** poleLeft[5];
+        PoleShape();
+};
+
+class EraserShape {
+    public:
+        Cell** eraserNonactive;
+        Cell** eraserActive;
+        EraserShape();
 };

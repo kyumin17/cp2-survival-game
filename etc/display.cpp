@@ -26,8 +26,6 @@ void Display::printDisplay() {
         }
         printw("\n");
     }
-
-    printBackgroud();
 }
 
 void Display::clearDisplay() {
@@ -36,23 +34,5 @@ void Display::clearDisplay() {
             screen[row][col].value = ' ';
             screen[row][col].color = COLOR_WHITE;
         }
-    }
-}
-
-void Display::printBackgroud() {
-    move(0, 0);
-    for (int row = 0; row < 10; row++) {
-        for (int col = 0; col < WIDTH; col++) {
-            printw("%c", '#');
-        }
-        printw("\n");
-    }
-
-    move(27, 0);
-    for (int row = 0; row < 3; row++) {
-        for (int col = 0; col < WIDTH; col++) {
-            printw("%c", '#');
-        }
-        printw("\n");
     }
 }

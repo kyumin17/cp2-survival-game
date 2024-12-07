@@ -1,23 +1,15 @@
 #pragma once
 #include <ncurses.h>
 #include <unistd.h>
-#include <bits/stdc++.h>
-#include "../component/player.hpp"
-#include "../component/enemy.hpp"
-#include "../component/bullet.hpp"
-#include "../component/block.hpp"
-#include "../etc/character.hpp"
 
 int startPage();
 
-int selectStagePage();
+int playPage();
 
-void stage1Page();
+int selectWeaponPage();
 
-int endingPage();
-
-int checkQuitPage();
-
-int checkQuitStage();
+int endPage(int score);
 
 int checkQuitStart();
+
+int checkQuitStage();

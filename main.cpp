@@ -10,19 +10,18 @@ int main() {
 	cbreak();
 	start_color();
     init_color(9, 100, 100, 100); //dark grey
+    init_color(10, 82, 741, 192); //orange
+    init_pair(10, 10, 9);
 
-    int stage;
-    if (startPage()) {
-        clear();
-        stage = selectStagePage();
+    int score;
+    while (startPage()) {
+        do {
+            clear();
+            score = playPage(); //게임 플레이
+            clear();
+        } while(endPage(score));
     }
 
     clear();
-    switch (stage) {
-        case 1:
-            stage1Page();
-            break;
-    }
-
     endwin();
 }

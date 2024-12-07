@@ -99,7 +99,7 @@ int startPage() {
             if (start == 1) {
                 clear();
                 refresh();
-                return endingPage(); //back to game
+                return playPage(); //back to game
             } else if (start == 2) {
                 clear();
                 refresh();
