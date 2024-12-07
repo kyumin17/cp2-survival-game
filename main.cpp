@@ -22,12 +22,6 @@ int main() {
         case 1:
             stage1Page();
             break;
-        case 2:
-            stage2Page();
-            break;
-        case 3:
-            stage3Page();
-            break;
     }
 
     endwin();
