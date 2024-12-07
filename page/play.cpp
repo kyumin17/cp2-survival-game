@@ -1,7 +1,6 @@
 #include "page.hpp"
 #include <random>
 #include <vector>
-#include <cmath>
 #include "../etc/game.hpp"
 
 using namespace std;
@@ -11,7 +10,7 @@ int playPage() {
     Game game;
 
     game.createMap();
-    game.createEnemy();
+    game.createEnemy(10);
 
     //게임
     while (!game.end) {
@@ -25,6 +24,8 @@ int playPage() {
         game.updateWeapon(direction);
         game.draw();
 
+        if (game.enemyArr.size() < 30) game.createEnemy(30 - game.enemyArr.size());
+
         switch(ch) {
             case 'i':
                 game.attack();
@@ -34,6 +35,15 @@ int playPage() {
                 break;
             case 'o':
                 game.weaponType = selectWeaponPage();
+                break;
+            case '1':
+                game.changeWeapon(1);
+                break;
+            case '2':
+                game.changeWeapon(2);
+                break;
+            case '3':
+                game.changeWeapon(3);
                 break;
         }
 

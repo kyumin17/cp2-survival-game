@@ -10,6 +10,8 @@ int main() {
 	cbreak();
 	start_color();
     init_color(9, 100, 100, 100); //dark grey
+    init_color(10, 82, 741, 192); //orange
+    init_pair(10, 10, 9);
 
     while (startPage()) {
         do {

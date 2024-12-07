@@ -3,6 +3,7 @@
 Weapon::Weapon(int _x, int _y, int _width, int _height, int _cooldown, Cell** _character)
 : Component(_x, _y, _width, _height, _character) {
     cooldown = _cooldown;
+    attackTime = 0;
 }
 
 /*활*/
@@ -136,7 +137,6 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
         int enemyIdx = arrowArr[i] -> isEnemy(enemyArr);
         if (enemyIdx != -1) {
             enemyArr.erase(enemyArr.begin() + enemyIdx);
-            arrowArr.erase(arrowArr.begin() + i);
         } else if (arrowArr[i] -> isBlock(blockArr)) {
             arrowArr.erase(arrowArr.begin() + i);
         }
@@ -146,11 +146,67 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
 /*막대기*/
 Pole::Pole(int _x, int _y, Cell** _character)
 : Weapon(_x, _y, 5, 6, 5, _character) {
+    direction = RIGHT;
+}
 
+void Pole::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
+    PoleShape poleShape;
+
+    if (input == RIGHT || input == LEFT) direction = input;
+
+    if (attackTime > 5) return; 
+
+    if (direction == RIGHT) {
+        x = playerX + 3;
+        changeCharacter(poleShape.poleRight[attackTime - 1]);
+    } else if (direction == LEFT) {
+        x = playerX - 5;
+        changeCharacter(poleShape.poleLeft[attackTime - 1]);
+    }
+
+    for (size_t i = 0; i < enemyArr.size(); i++) {
+        int ex = enemyArr[i] -> x;
+        int ey = enemyArr[i] -> y;
+        int ew = enemyArr[i] -> width;
+        int eh = enemyArr[i] -> height;
+
+        if (y <= ey + eh - 1 && ey <= y + height - 1 && x <= ex + ew - 1 && ex <= x + width - 1) {
+            enemyArr.erase(enemyArr.begin() + i);
+        }
+    }
+}
+
+void Pole::changePoleDirection(int input, int playerX) {
+    PoleShape poleShape;
+
+    if (input == RIGHT || input == LEFT) direction = input;
+
+    if (direction == LEFT) {
+        x = playerX - 5;
+        changeCharacter(poleShape.poleLeft[0]);
+    } else if (direction == RIGHT) {
+        x = playerX + 3;
+        changeCharacter(poleShape.poleRight[0]);
+    }
 }
 
 /*원반*/
-Disk::Disk(int _x, int _y, Cell** _character)
-: Weapon(_x, _y, 1, 1, 5, _character) {
+Eraser::Eraser(int _x, int _y, Cell** _character)
+: Weapon(_x, _y, 7, 5, 5, _character) {
+    
+}
 
+void Eraser::attack(vector<Enemy*>& enemyArr) {
+    EraserShape eraserShape;
+    for (size_t i = 0; i < enemyArr.size(); i++) {
+        changeCharacter(eraserShape.eraserActive);
+        int ex = enemyArr[i] -> x;
+        int ey = enemyArr[i] -> y;
+        int ew = enemyArr[i] -> width;
+        int eh = enemyArr[i] -> height;
+
+        if (y <= ey + eh - 1 && ey <= y + height - 1 && x <= ex + ew - 1 && ex <= x + width - 1) {
+            enemyArr.erase(enemyArr.begin() + i);
+        }
+    }
 }

@@ -59,25 +59,92 @@ PlayerCharacter::PlayerCharacter() {
 }
 
 EnemyCharacter::EnemyCharacter() {
-    char frontTxt[3][4] = {
+    char enemy1Txt[3][4] = {
         " # ",
         "/|\\",
         "/ \\"
     };
 
-    int row = 3;
-    int col = 3;
+    char enemy2Txt[3][4] = {
+        "(!)",
+        "/|\\",
+        "/|\\"
+    };
 
-    front = new Cell*[row];
+    char enemy3Txt[1][5] = {
+       "~~~@"
+    };
 
-    for (int i = 0; i < row; i++) {
-        front[i] = new Cell[col];
+    char enemy4Txt[2][5] = {
+       " /\\ ",
+       "(++)"
+    };
+
+    //enemy1
+    int row1 = 3;
+    int col1 = 3;
+
+    enemy1 = new Cell*[row1];
+
+    for (int i = 0; i < row1; i++) {
+        enemy1[i] = new Cell[col1];
     }
 
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            front[i][j].value = frontTxt[i][j];
-            front[i][j].color = COLOR_GREEN;
+    for (int i = 0; i < row1; i++) {
+        for (int j = 0; j < col1; j++) {
+            enemy1[i][j].value = enemy1Txt[i][j];
+            enemy1[i][j].color = COLOR_GREEN;
+        }
+    }
+
+    //enemy2
+    int row2 = 3;
+    int col2 = 3;
+
+    enemy2 = new Cell*[row2];
+
+    for (int i = 0; i < row2; i++) {
+        enemy2[i] = new Cell[col2];
+    }
+
+    for (int i = 0; i < row2; i++) {
+        for (int j = 0; j < col2; j++) {
+            enemy2[i][j].value = enemy2Txt[i][j];
+            enemy2[i][j].color = COLOR_GREEN;
+        }
+    }
+
+    //enemy3
+    int row3 = 1;
+    int col3 = 4;
+
+    enemy3 = new Cell*[row3];
+
+    for (int i = 0; i < row3; i++) {
+        enemy3[i] = new Cell[col3];
+    }
+
+    for (int i = 0; i < row3; i++) {
+        for (int j = 0; j < col3; j++) {
+            enemy3[i][j].value = enemy3Txt[i][j];
+            enemy3[i][j].color = COLOR_GREEN;
+        }
+    }
+
+    //enemy4
+    int row4 = 2;
+    int col4 = 4;
+
+    enemy4 = new Cell*[row4];
+
+    for (int i = 0; i < row4; i++) {
+        enemy4[i] = new Cell[col4];
+    }
+
+    for (int i = 0; i < row4; i++) {
+        for (int j = 0; j < col4; j++) {
+            enemy4[i][j].value = enemy4Txt[i][j];
+            enemy4[i][j].color = COLOR_GREEN;
         }
     }
 }
@@ -239,8 +306,10 @@ PoleShape::PoleShape() {
     //동적할당
     for (int i = 0; i < 5; i++) {
         poleRight[i] = new Cell*[row];
+        poleLeft[i] = new Cell*[row];
         for (int j = 0; j < 6; j++) {
             poleRight[i][j] = new Cell[col];
+            poleLeft[i][j] = new Cell[col];
         }
     }
     
@@ -271,9 +340,40 @@ PoleShape::PoleShape() {
     }
 }
 
-DiskShape::DiskShape() {
-    Cell** disk = new Cell*[1];
-    disk[0] = new Cell[1];
-    disk[0][0].value = 'O';
-    disk[0][0].color = COLOR_YELLOW;
+EraserShape::EraserShape() {
+    char activateTxt[5][8] = {
+        "  * *  ",
+        " *   * ",
+        "*     *",
+        " *   * ",
+        "  * *  "
+    };
+
+    char nonactiveTxt[5][8] = {
+        "       ",
+        "       ",
+        "*     *",
+        "       ",
+        "       "
+    };
+
+
+    int row = 5;
+    int col = 7;
+
+    eraserNonactive = new Cell*[row];
+    eraserActive = new Cell*[row];
+    for (int i = 0; i < row; i++) {
+        eraserNonactive[i] = new Cell[col];
+        eraserActive[i] = new Cell[col];
+    }
+
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            eraserNonactive[i][j].value = nonactiveTxt[i][j];
+            eraserNonactive[i][j].color = COLOR_YELLOW;
+            eraserActive[i][j].value = activateTxt[i][j];
+            eraserActive[i][j].color = COLOR_YELLOW;
+        }
+    }
 }
