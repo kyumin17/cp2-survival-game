@@ -1,8 +1,9 @@
 #include "enemy.hpp"
 #define pii pair<int,int>
 
-Enemy::Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character)
+Enemy::Enemy(int _type, int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character)
 : Component(_x, _y, _width, _height, _character) {
+    type = _type;
     hp = _hp;
     str = _str;
     isTracking = false;

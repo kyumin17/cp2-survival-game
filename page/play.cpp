@@ -5,12 +5,11 @@
 
 using namespace std;
 
-int playPage() {
+int playPage(int& score) {
     char ch;
     Game game;
 
     game.createMap();
-    game.createEnemy(10);
 
     //게임
     while (!game.end) {
@@ -24,7 +23,7 @@ int playPage() {
         game.updateWeapon(direction);
         game.draw();
 
-        if (game.enemyArr.size() < 30) game.createEnemy(30 - game.enemyArr.size());
+        game.createEnemy();
 
         switch(ch) {
             case 'i':
@@ -34,11 +33,8 @@ int playPage() {
                 clear();
                 if (checkQuitStage()) {
                     clear();
-                    startPage();
+                    return START;
                 }
-                break;
-            case 'o':
-                game.weaponType = selectWeaponPage();
                 break;
             case '1':
                 game.changeWeapon(1);
@@ -51,12 +47,19 @@ int playPage() {
                 break;
         }
 
-        game.end = game.player -> isTouch(game.enemyArr);
+        game.end = game.end || game.player -> isTouch(game.enemyArr);
+        if (game.time % 500 == 0) {
+            game.enemyNum += 5;
+        }
+        if (game.time % 100 == 0) {
+            game.score += 1;
+        }
 
-        usleep(10000);
+        usleep(10000); //10ms
     }
 
     clear();
+    score = game.score;
 
     return END;
 }

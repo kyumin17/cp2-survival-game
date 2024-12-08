@@ -9,7 +9,8 @@ class Block {
         int x;
         int y;
         int height;
-        Block(int _x, int _y, int _height);
+        bool isAttack;
+        Block(int _x, int _y, int _height, bool _isAttack);
         void draw();
         bool isOverlap(int cx, int cy);
 };

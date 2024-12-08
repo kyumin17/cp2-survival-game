@@ -6,11 +6,9 @@ enum Page { START, PLAY, END, QUIT };
 
 int startPage();
 
-int playPage();
+int playPage(int& score);
 
-int selectWeaponPage();
-
-int endPage();
+int endPage(int score);
 
 int checkQuitStart();
 

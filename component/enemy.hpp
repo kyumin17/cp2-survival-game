@@ -12,9 +12,10 @@ class Enemy: public Component {
         int str;
         int direction;
         bool isTracking;
+        int type;
         int dx;
         int dy;
-        Enemy(int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character);
+        Enemy(int _type, int _hp, int _str, int _x, int _y, int _width, int _height, Cell** _character);
         void moveX(int playerX, int playerY, vector<Block*>& blockArr);
         void moveY(int playerX, int playerY, vector<Block*>& blockArr);
         bool isBlock(vector<Block*>& blockArr);

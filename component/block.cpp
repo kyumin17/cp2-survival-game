@@ -1,9 +1,10 @@
 #include "block.hpp"
 
-Block::Block(int _x, int _y, int _height) {
+Block::Block(int _x, int _y, int _height, bool _isAttack) {
     x = _x;
     y = _y;
     height = _height;
+    isAttack = _isAttack;
 }
 
 void Block::draw() {
@@ -15,13 +16,13 @@ void Block::draw() {
         return;
     }
 
-    //attron(COLOR_PAIR(10));
+    if (isAttack) attron(COLOR_PAIR(10));
     for (int row = std::max(r, 0); row < std::min(r + height, HEIGHT - 1); row++) {
         for (int col = std::max(c, 0); col < std::min(c + 2 * height, WIDTH - 1); col++) {
             mvaddch(row, col, ACS_CKBOARD);
         }
     }
-    //attroff(COLOR_PAIR(10));
+    if (isAttack) attroff(COLOR_PAIR(10));
 }
 
 bool Block::isOverlap(int cx, int cy) {

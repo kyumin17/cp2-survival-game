@@ -14,5 +14,5 @@ class Player: public Component {
         Player(int _x, int _y, int _width, int _height, Cell** _character);
         void move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, PlayerCharacter playerCharacter);
         bool isTouch(vector<Enemy*>& enemyArr);
-        bool isBlock(vector<Block*>& blockArr, int input);
+        bool isBlock(vector<Block*>& blockArr, int input, bool& end);
 };

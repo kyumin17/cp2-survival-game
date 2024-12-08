@@ -6,6 +6,7 @@ Game::Game() {
     bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
     pole = new Pole(player -> x + 3, player -> y - 2, poleShape.poleRight[0]);
     eraser = new Eraser(player -> x - 2, player -> y - 1, eraserShape.eraserNonactive);
+    enemyNum = 10;
     time = 0;
     score = 0;
     end = false;
@@ -36,10 +37,15 @@ void Game::createMap() {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> disPos(-500, 492);
     std::uniform_int_distribution<int> disLen(4, 8);
+    std::uniform_int_distribution<int> disAttack(1, 3);
 
     //block 생성
     for (int i = 0; i < 2500; i++) {
-        blockArr.push_back(new Block(disPos(gen), disPos(gen), disLen(gen)));
+        if (disAttack(gen) == 1) {
+            blockArr.push_back(new Block(disPos(gen), disPos(gen), disLen(gen), true));
+        } else {
+            blockArr.push_back(new Block(disPos(gen), disPos(gen), disLen(gen), false));
+        }
     }
 
     for (int i = 0; i < 2500; i++) {
@@ -49,12 +55,15 @@ void Game::createMap() {
     }
 }
 
-void Game::createEnemy(int createNum) {
+void Game::createEnemy() {
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> disX(-30, 160);
     std::uniform_int_distribution<int> disY(-30, 60);
+
+    int createNum = enemyNum - enemyArr.size();
+    if (score != 0) score += createNum;
 
     //적 생성
     for (int i = 0; i < createNum; i++) {
@@ -77,13 +86,13 @@ void Game::createEnemy(int createNum) {
 
         //적 생성
         if (i < createNum / 4) {
-            enemyArr.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.enemy1));
+            enemyArr.push_back(new Enemy(1, 3, 3, ex, ey, 3, 3, enemyCharacter.enemy1));
         } else if (i < createNum / 2) {
-            enemyArr.push_back(new Enemy(3, 3, ex, ey, 3, 3, enemyCharacter.enemy2));
+            enemyArr.push_back(new Enemy(2, 3, 3, ex, ey, 3, 3, enemyCharacter.enemy2));
         } else if (i < createNum * 3 / 4) {
-            enemyArr.push_back(new Enemy(3, 3, ex, ey, 4, 1, enemyCharacter.enemy3));
+            enemyArr.push_back(new Enemy(3, 3, 3, ex, ey, 4, 1, enemyCharacter.enemy3));
         } else {
-            enemyArr.push_back(new Enemy(3, 3, ex, ey, 4, 2, enemyCharacter.enemy4));
+            enemyArr.push_back(new Enemy(4, 3, 3, ex, ey, 4, 2, enemyCharacter.enemy4));
         }
     }
 }
@@ -116,9 +125,15 @@ void Game::draw() {
     for (size_t i = 0; i < blockArr.size(); i++) {
         blockArr[i] -> draw();
     }
+
+    printBackground();
 }
 
 void Game::moveEnemy() {
+    /*
+    20프레임마다 적 움직임
+    앞에 블럭 혹은 다른 적 있을 시 피해서 감
+    */
     for (size_t i = 0; i < enemyArr.size(); i++) {
         if (time % 20 == 0) {
             enemyArr[i] -> isTracking = true;
@@ -156,7 +171,7 @@ bool Game::isEnemy(int idx) {
 }
 
 void Game::movePlayer(int direction) {
-    if (!player -> isBlock(blockArr, direction)) {
+    if (!player -> isBlock(blockArr, direction, end)) { //앞에 블럭 없으면 감
         player -> move(direction, enemyArr, blockArr, playerCharacter);
     }
 }
@@ -230,7 +245,7 @@ void Game::updateWeapon(int input) {
 
 void Game::attack() {
     /*
-    공격 키 입력했을 때 실행될 것
+    공격 키 입력했을 때 실행
     */
     switch(weaponType) {
         case 1:
@@ -251,4 +266,8 @@ void Game::attack() {
             }
             break;
     }
+}
+
+void Game::printBackground() {
+    mvprintw(1, 120, "SCORE: %d", score);
 }

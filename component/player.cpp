@@ -59,25 +59,36 @@ bool Player::isTouch(vector<Enemy*>& enemyArr) {
     return false;
 }
 
-bool Player::isBlock(vector<Block*>& blockArr, int input) {
+bool Player::isBlock(vector<Block*>& blockArr, int input, bool& end) {
     /*
     플레이어가 블록과 충돌할 경우 true를 반환하고, 그렇지 않은 경우 false를 반환한다.
     */
+
+    bool isCollision = false;
+    int collisionIdx = -1;
     for (size_t i = 0; i < blockArr.size(); i++) {
         int bx = blockArr[i] -> x;
         int by = blockArr[i] -> y;
         int bh = blockArr[i] -> height;
         
         if (input == LEFT && x == bx + bh * 2 && by - 2 <= y && y <= by + bh - 1) {
-            return true;
+            isCollision = true;
+            collisionIdx = i;
         } else if (input == RIGHT && x + 3 == bx && by - 2 <= y && y <= by + bh - 1) {
-            return true;
+            isCollision = true;
+            collisionIdx = i;
         } else if (input == BACK && y + 3 == by && bx - 3 <= x && x <= bx + bh * 2 - 1) {
-            return true;
+            isCollision = true;
+            collisionIdx = i;
         } else if (input == FRONT && y == by + bh && bx - 3 <= x && x <= bx + bh * 2 - 1) {
-            return true;
+            isCollision = true;
+            collisionIdx = i;
         }
     }
-    
-    return false;
+
+    if (isCollision && blockArr[collisionIdx] -> isAttack) {
+        end = true;
+    } 
+
+    return isCollision;
 }

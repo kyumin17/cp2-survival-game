@@ -26,6 +26,7 @@ class Game {
         PoleShape poleShape;
         EraserShape eraserShape;
 
+        int enemyNum;
         int time;
         int score;
         bool end;
@@ -33,7 +34,7 @@ class Game {
         Game();
         int getDirection(char ch);
         void createMap();
-        void createEnemy(int createNum);
+        void createEnemy();
         void draw();
         void moveEnemy();
         bool isEnemy(int idx);
@@ -41,4 +42,5 @@ class Game {
         void changeWeapon(int type);
         void updateWeapon(int input);
         void attack();
+        void printBackground();
 };

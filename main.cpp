@@ -14,16 +14,17 @@ int main() {
     init_pair(10, 10, 9);
 
     int page = START;
+    int score;
     while (page != QUIT) {
         switch (page) {
             case START:
                 page = startPage(); //시작화면
                 break;
             case PLAY:
-                page = playPage(); //게임 플레이 화면
+                page = playPage(score); //게임 플레이 화면
                 break;
             case END:
-                page = endPage(); //종료 화면
+                page = endPage(score); //종료 화면
                 break;
         }
         clear();
