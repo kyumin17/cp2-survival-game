@@ -15,11 +15,15 @@ Display::Display() {
 }
 
 void Display::printDisplay() {
+    /*
+    screen에 입력된 대로 색상과 글자 출력
+    */
+   
     move(0, 0);
     for (int row = 0; row < HEIGHT; row++) {
         for (int col = 0; col < WIDTH; col++) {
             Cell cell = screen[row][col];
-            init_pair(cell.color, cell.color, 9);
+            init_pair(cell.color, cell.color, 9); //색 설정
             attron(COLOR_PAIR(cell.color));
             printw("%c", cell.value);
             attroff(COLOR_PAIR(cell.color));

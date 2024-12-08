@@ -68,16 +68,48 @@ EnemyCharacter::EnemyCharacter() {
     char enemy2Txt[3][4] = {
         "(!)",
         "/|\\",
-        "/|\\"
+        "/ \\"
     };
 
-    char enemy3Txt[1][5] = {
+    char enemy2DeadTxt[5][8] = {
+        "   |   ",
+        " \\   / ",
+        "-     -",
+        " /   \\ ",
+        "   |   "
+    };
+
+    char enemy3LeftTxt[1][5] = {
        "~~~@"
+    };
+
+    char enemy3RightTxt[1][5] = {
+       "@~~~"
+    };
+
+    char enemy3FrontTxt[3][2] = {
+        "(",
+        ")",
+        "@"
+    };
+
+    char enemy3BackTxt[3][2] = {
+        "@",
+        "(",
+        ")"
     };
 
     char enemy4Txt[2][5] = {
        " /\\ ",
        "(++)"
+    };
+
+    char enemy4Div1Txt[1][5] = {
+        "(++)"
+    };
+
+    char enemy4Div2Txt[1][4] = {
+        "(+)"
     };
 
     //enemy1
@@ -118,16 +150,16 @@ EnemyCharacter::EnemyCharacter() {
     int row3 = 1;
     int col3 = 4;
 
-    enemy3 = new Cell*[row3];
+    enemy3Right = new Cell*[row3];
 
     for (int i = 0; i < row3; i++) {
-        enemy3[i] = new Cell[col3];
+        enemy3Right[i] = new Cell[col3];
     }
 
     for (int i = 0; i < row3; i++) {
         for (int j = 0; j < col3; j++) {
-            enemy3[i][j].value = enemy3Txt[i][j];
-            enemy3[i][j].color = COLOR_GREEN;
+            enemy3Right[i][j].value = enemy3RightTxt[i][j];
+            enemy3Right[i][j].color = COLOR_GREEN;
         }
     }
 
@@ -209,8 +241,8 @@ BowShape::BowShape() {
     arrowUp[0][0].color = COLOR_YELLOW;
 }
 
-PoleShape::PoleShape() {
-    char poleRight0[6][6] = {
+SwordShape::SwordShape() {
+    char swordRight0[6][6] = {
         "|    ",
         "|    ",
         "T    ",
@@ -219,7 +251,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleRight1[6][6] = {
+    char swordRight1[6][6] = {
         "  /  ",
         " /   ",
         "/    ",
@@ -228,7 +260,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleRight2[6][6] = {
+    char swordRight2[6][6] = {
         "     ",
         "     ",
         "- - -",
@@ -237,7 +269,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleRight3[6][6] = {
+    char swordRight3[6][6] = {
         "     ",
         "     ",
         "     ",
@@ -246,7 +278,7 @@ PoleShape::PoleShape() {
         "  \\  "
     };
 
-    char poleRight4[6][6] = {
+    char swordRight4[6][6] = {
         "     ",
         "     ",
         "     ",
@@ -255,7 +287,7 @@ PoleShape::PoleShape() {
         "|    "
     };
 
-    char poleLeft0[6][6] = {
+    char swordLeft0[6][6] = {
         "    |",
         "    |",
         "    T",
@@ -264,7 +296,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleLeft1[6][6] = {
+    char swordLeft1[6][6] = {
         "    \\",
         "   \\ ",
         "  \\  ",
@@ -273,7 +305,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleLeft2[6][6] = {
+    char swordLeft2[6][6] = {
         "     ",
         "     ",
         "- - -",
@@ -282,7 +314,7 @@ PoleShape::PoleShape() {
         "     "
     };
 
-    char poleLeft3[6][6] = {
+    char swordLeft3[6][6] = {
         "     ",
         "     ",
         "     ",
@@ -291,7 +323,7 @@ PoleShape::PoleShape() {
         "  /  "
     };
 
-    char poleLeft4[6][6] = {
+    char swordLeft4[6][6] = {
         "     ",
         "     ",
         "     ",
@@ -305,27 +337,27 @@ PoleShape::PoleShape() {
 
     //동적할당
     for (int i = 0; i < 5; i++) {
-        poleRight[i] = new Cell*[row];
-        poleLeft[i] = new Cell*[row];
+        swordRight[i] = new Cell*[row];
+        swordLeft[i] = new Cell*[row];
         for (int j = 0; j < 6; j++) {
-            poleRight[i][j] = new Cell[col];
-            poleLeft[i][j] = new Cell[col];
+            swordRight[i][j] = new Cell[col];
+            swordLeft[i][j] = new Cell[col];
         }
     }
     
     //값 설정
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            poleRight[0][i][j].value = poleRight0[i][j];
-            poleRight[1][i][j].value = poleRight1[i][j];
-            poleRight[2][i][j].value = poleRight2[i][j];
-            poleRight[3][i][j].value = poleRight3[i][j];
-            poleRight[4][i][j].value = poleRight4[i][j];
-            poleLeft[0][i][j].value = poleLeft0[i][j];
-            poleLeft[1][i][j].value = poleLeft1[i][j];
-            poleLeft[2][i][j].value = poleLeft2[i][j];
-            poleLeft[3][i][j].value = poleLeft3[i][j];
-            poleLeft[4][i][j].value = poleLeft4[i][j];
+            swordRight[0][i][j].value = swordRight0[i][j];
+            swordRight[1][i][j].value = swordRight1[i][j];
+            swordRight[2][i][j].value = swordRight2[i][j];
+            swordRight[3][i][j].value = swordRight3[i][j];
+            swordRight[4][i][j].value = swordRight4[i][j];
+            swordLeft[0][i][j].value = swordLeft0[i][j];
+            swordLeft[1][i][j].value = swordLeft1[i][j];
+            swordLeft[2][i][j].value = swordLeft2[i][j];
+            swordLeft[3][i][j].value = swordLeft3[i][j];
+            swordLeft[4][i][j].value = swordLeft4[i][j];
         }
     }
 
@@ -333,8 +365,8 @@ PoleShape::PoleShape() {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             for (int k = 0; k < 5; k++) {
-                poleRight[k][i][j].color = COLOR_YELLOW;
-                poleLeft[k][i][j].color = COLOR_YELLOW;
+                swordRight[k][i][j].color = COLOR_YELLOW;
+                swordLeft[k][i][j].color = COLOR_YELLOW;
             }
         }
     }

@@ -1,5 +1,4 @@
 #include "page.hpp"
-#include <random>
 #include <vector>
 #include "../etc/game.hpp"
 
@@ -11,24 +10,26 @@ int playPage(int& score) {
 
     game.createMap();
 
-    //게임
     while (!game.end) {
         game.time++;
         game.display.clearDisplay();
+
         ch = getch();
-        int direction = game.getDirection(ch);
+        int direction = game.getDirection(ch); //입력을 방향으로 변환
         
         game.moveEnemy();
         game.movePlayer(direction);
-        game.updateWeapon(direction);
-        game.draw();
+        game.updateWeapon(direction); //무기 상태 업데이트
+        game.draw(); //컴포넌트들을 그림
 
-        game.createEnemy();
+        game.createEnemy(); //적 새로 생성
 
         switch(ch) {
+            /*공격*/
             case 'i':
                 game.attack();
                 break;
+            /*게임 중단*/
             case 27:
                 clear();
                 if (checkQuitStage()) {
@@ -36,6 +37,7 @@ int playPage(int& score) {
                     return START;
                 }
                 break;
+            /*무기 전환*/
             case '1':
                 game.changeWeapon(1);
                 break;
@@ -47,19 +49,20 @@ int playPage(int& score) {
                 break;
         }
 
-        game.end = game.end || game.player -> isTouch(game.enemyArr);
+        game.end = game.end || game.player -> isDamaged(game.enemyArr); //적에 닿을 시 게임 종료
+
         if (game.time % 500 == 0) {
-            game.enemyNum += 5;
+            game.enemyNum += 5; //적 개수 증가
         }
         if (game.time % 100 == 0) {
-            game.score += 1;
+            game.score += 1; //시간에 따라 스코어 증가
         }
 
         usleep(10000); //10ms
     }
 
     clear();
-    score = game.score;
+    score = game.score; //스코어 기록
 
     return END;
 }

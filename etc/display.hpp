@@ -12,6 +12,6 @@ class Display {
     public:
         Cell** screen;
         Display();
-        void printDisplay(); //draw display in screen
-        void clearDisplay();
+        void printDisplay(); //화면 출력
+        void clearDisplay(); //화면 초기화
 };

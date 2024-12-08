@@ -9,10 +9,9 @@ using namespace std;
 
 class Player: public Component {
     public:
-        int hp;
         int direction;
         Player(int _x, int _y, int _width, int _height, Cell** _character);
         void move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, PlayerCharacter playerCharacter);
-        bool isTouch(vector<Enemy*>& enemyArr);
-        bool isBlock(vector<Block*>& blockArr, int input, bool& end);
+        bool isDamaged(vector<Enemy*>& enemyArr); //적과 닿았는지 판단
+        bool isBlock(vector<Block*>& blockArr, int input, bool& end); //장애물이 있는지 판단
 };

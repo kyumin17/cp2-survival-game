@@ -2,6 +2,7 @@
 #include <ncurses.h>
 
 int main() {
+    /*초기 세팅*/
 	initscr();
 	noecho();
 	nodelay(stdscr, TRUE);
@@ -10,11 +11,13 @@ int main() {
 	cbreak();
 	start_color();
     init_color(9, 100, 100, 100); //dark grey
-    init_color(10, 82, 741, 192); //orange
+    init_color(10, 82, 741, 192); //green
     init_pair(10, 10, 9);
+    init_pair(11, COLOR_WHITE, 9);
 
-    int page = START;
-    int score;
+    int page = START; //페이지 종류
+    int score; //점수
+    int maxScore = 0; //최대 점수
     while (page != QUIT) {
         switch (page) {
             case START:
@@ -24,7 +27,7 @@ int main() {
                 page = playPage(score); //게임 플레이 화면
                 break;
             case END:
-                page = endPage(score); //종료 화면
+                page = endPage(score, maxScore); //종료 화면
                 break;
         }
         clear();

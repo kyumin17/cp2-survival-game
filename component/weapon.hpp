@@ -18,9 +18,9 @@ class Arrow: public Component  {
     public:
         int direction; //화살 나가는 방향
         Arrow(int _x, int _y, int _direction, Cell** _character);
-        void move();
-        int isEnemy(vector<Enemy*>& enemyArr);
-        bool isBlock(vector<Block*>& blockArr);
+        void move(); //방향에 따라 활 움직임
+        int isHitEnemy(vector<Enemy*>& enemyArr); //적에 맞았는지 체크
+        bool isHitBlock(vector<Block*>& blockArr); //블럭에 맞았는지 체크
 };
 
 class Bow: public Weapon {
@@ -34,12 +34,12 @@ class Bow: public Weapon {
         void checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr);
 };
 
-class Pole: public Weapon {
+class Sword: public Weapon {
     public:
         int direction; //left or right
-        Pole(int _x, int _y, Cell** _character);
+        Sword(int _x, int _y, Cell** _character);
         void attack(int direction, int playerX, vector<Enemy*>& enemyArr);
-        void changePoleDirection(int direction, int playerX);
+        void changeSwordDirection(int direction, int playerX);
 };
 
 class Eraser: public Weapon {

@@ -7,8 +7,9 @@ Player::Player(int _x, int _y, int _width, int _height, Cell** _image)
 
 void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, PlayerCharacter playerCharacter) {
     /*
-    플레이어의 움직임에 따라 배경을 움직인다.
+    플레이어의 움직임에 따라 배경을 움직임
     */
+
     int dx = 0;
     int dy = 0;
 
@@ -35,6 +36,7 @@ void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr,
             break;
     }
 
+    /*방향에 맞게 배경을 움직임*/
     for (size_t i = 0; i < enemyArr.size(); i++) {
         (enemyArr[i] -> x) += dx;
         (enemyArr[i] -> y) += dy;
@@ -45,17 +47,22 @@ void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr,
     }
 }
 
-bool Player::isTouch(vector<Enemy*>& enemyArr) {
+bool Player::isDamaged(vector<Enemy*>& enemyArr) {
     /*
     플레이어가 적과 만날 경우 true를 반환하고, 그렇지 않은 경우 false를 반환한다.
     */
+
     for (size_t i = 0; i < enemyArr.size(); i++) {
         int ex = enemyArr[i] -> x;
         int ey = enemyArr[i] -> y;
-        if (-3 < x - ex && x - ex < 3 && -3 < y - ey && y - ey < 3) {
+        int ew = enemyArr[i] -> width;
+        int eh = enemyArr[i] -> height;
+
+        if (x + width >= ex && x <= ex + ew && y + height >= ey && y <= ey + eh) { //overlap 판단
             return true;
         }
     }
+
     return false;
 }
 
@@ -87,7 +94,7 @@ bool Player::isBlock(vector<Block*>& blockArr, int input, bool& end) {
     }
 
     if (isCollision && blockArr[collisionIdx] -> isAttack) {
-        end = true;
+        end = true; //플레이어에게 피해를 주는 블록에 충돌했을 시 게임 끝냄
     } 
 
     return isCollision;

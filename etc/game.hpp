@@ -17,13 +17,13 @@ class Game {
 
         int weaponType;
         Bow* bow;
-        Pole* pole;
+        Sword* sword;
         Eraser* eraser;
 
         PlayerCharacter playerCharacter;
         EnemyCharacter enemyCharacter;
         BowShape bowShape;
-        PoleShape poleShape;
+        SwordShape swordShape;
         EraserShape eraserShape;
 
         int enemyNum;

@@ -6,17 +6,18 @@ Weapon::Weapon(int _x, int _y, int _width, int _height, int _cooldown, Cell** _c
     attackTime = 0;
 }
 
-/*활*/
+/*화살*/
 Arrow::Arrow(int _x, int _y, int _direction, Cell** _character)
 : Component(_x, _y, 1, 1, _character) {
     direction = _direction;
 }
 
-int Arrow::isEnemy(vector<Enemy*>& enemyArr) {
+int Arrow::isHitEnemy(vector<Enemy*>& enemyArr) {
     /*
     화살과 적이 부딪혔다면 적의 인덱스를 반환
     부딪히지 않았다면 -1 반환
     */
+   
     for (size_t i = 0; i < enemyArr.size(); i++) {
         int ex = enemyArr[i] -> x;
         int ey = enemyArr[i] -> y;
@@ -31,6 +32,7 @@ void Arrow::move() {
     /*
     나가는 방향에 따라 화살 움직임
     */
+
     switch(direction) {
         case LEFT:
             x -= 2;
@@ -47,10 +49,11 @@ void Arrow::move() {
     }
 }
 
-bool Arrow::isBlock(vector<Block*>& blockArr) {
+bool Arrow::isHitBlock(vector<Block*>& blockArr) {
     /*
-    블럭(장애물)과 만났는지 체크
+    블럭과 만났는지 체크
     */
+
     for (size_t i = 0; i < blockArr.size(); i++) {
         int bx = blockArr[i] -> x;
         int by = blockArr[i] -> y;
@@ -68,13 +71,17 @@ bool Arrow::isBlock(vector<Block*>& blockArr) {
     return false;
 }
 
-/*화살*/
+/*활*/
 Bow::Bow(int _x, int _y, Cell** _character)
 : Weapon(_x, _y, 3, 1, 5, _character) {
     
 }
 
 void Bow::attack(int direction) {
+    /*
+    공격 방향에 따라 화살 배열에 화살 추가
+    */
+
     BowShape bowShape;
 
     switch(direction) {
@@ -94,6 +101,10 @@ void Bow::attack(int direction) {
 }
 
 void Bow::changeBowDirection(int direction, int playerX, int playerY) {
+    /*
+    플레이어가 바라보는 방향에 따라 화살 이미지 변경
+    */
+
     BowShape bowshape;
     
     switch (direction) {
@@ -134,23 +145,23 @@ void Bow::moveArrows() {
 
 void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
     for (size_t i = 0; i < arrowArr.size(); i++) {
-        int enemyIdx = arrowArr[i] -> isEnemy(enemyArr);
+        int enemyIdx = arrowArr[i] -> isHitEnemy(enemyArr);
         if (enemyIdx != -1) {
             enemyArr.erase(enemyArr.begin() + enemyIdx);
-        } else if (arrowArr[i] -> isBlock(blockArr)) {
+        } else if (arrowArr[i] -> isHitBlock(blockArr)) {
             arrowArr.erase(arrowArr.begin() + i);
         }
     }
 }
 
-/*막대기*/
-Pole::Pole(int _x, int _y, Cell** _character)
+/*검*/
+Sword::Sword(int _x, int _y, Cell** _character)
 : Weapon(_x, _y, 5, 6, 5, _character) {
     direction = RIGHT;
 }
 
-void Pole::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
-    PoleShape poleShape;
+void Sword::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
+    SwordShape swordShape;
 
     if (input == RIGHT || input == LEFT) direction = input;
 
@@ -158,10 +169,10 @@ void Pole::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
 
     if (direction == RIGHT) {
         x = playerX + 3;
-        changeCharacter(poleShape.poleRight[attackTime - 1]);
+        changeCharacter(swordShape.swordRight[attackTime - 1]);
     } else if (direction == LEFT) {
         x = playerX - 5;
-        changeCharacter(poleShape.poleLeft[attackTime - 1]);
+        changeCharacter(swordShape.swordLeft[attackTime - 1]);
     }
 
     for (size_t i = 0; i < enemyArr.size(); i++) {
@@ -176,17 +187,17 @@ void Pole::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
     }
 }
 
-void Pole::changePoleDirection(int input, int playerX) {
-    PoleShape poleShape;
+void Sword::changeSwordDirection(int input, int playerX) {
+    SwordShape swordShape;
 
     if (input == RIGHT || input == LEFT) direction = input;
 
     if (direction == LEFT) {
         x = playerX - 5;
-        changeCharacter(poleShape.poleLeft[0]);
+        changeCharacter(swordShape.swordLeft[0]);
     } else if (direction == RIGHT) {
         x = playerX + 3;
-        changeCharacter(poleShape.poleRight[0]);
+        changeCharacter(swordShape.swordRight[0]);
     }
 }
 

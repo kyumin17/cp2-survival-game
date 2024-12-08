@@ -8,8 +8,8 @@ int startPage();
 
 int playPage(int& score);
 
-int endPage(int score);
+int endPage(int score, int& maxScore);
 
-int checkQuitStart();
+bool checkQuitStart();
 
-int checkQuitStage();
+bool checkQuitStage();

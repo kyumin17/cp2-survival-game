@@ -15,8 +15,14 @@ class EnemyCharacter {
     public:
         Cell** enemy1;
         Cell** enemy2;
-        Cell** enemy3;
+        Cell** enemy2Dead; //적2 범위 피해 이미지
+        Cell** enemy3Left;
+        Cell** enemy3Right;
+        Cell** enemy3Front;
+        Cell** enemy3Back;
         Cell** enemy4;
+        Cell** enemy4Div1; //1차 분열 이미지
+        Cell** enemy4Div2; //2차 분열 이미지
         EnemyCharacter();
 };
 
@@ -33,16 +39,16 @@ class BowShape {
         BowShape();
 };
 
-class PoleShape {
+class SwordShape {
     public:
-        Cell** poleRight[5];
-        Cell** poleLeft[5];
-        PoleShape();
+        Cell** swordRight[5]; //움직임 배열로 저장
+        Cell** swordLeft[5];
+        SwordShape();
 };
 
 class EraserShape {
     public:
         Cell** eraserNonactive;
-        Cell** eraserActive;
+        Cell** eraserActive; //공격 시 이미지
         EraserShape();
 };

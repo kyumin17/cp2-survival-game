@@ -6,23 +6,34 @@
 
 using namespace std;
 
-int endPage(int score) {
+int endPage(int score, int& maxScore) {
     /*
-    retry라면 1을, quit이라면 0을 반환한다.
+    게임 종료 화면
+    retry 선택 시 게임 재시작, home 클릭 시 start page로 이동
     */
 
-    char ch;
-    int endingPage = 1;
-    vector<int> v;
+    int ch;
+    int option = 1;
+    bool isMaxScore = false;
+
+    /*최대 점수 갱신*/
+    if (maxScore < score) {
+        maxScore = score;
+        isMaxScore = true;
+    }
+
+    /*점수의 각 자릿수를 저장*/
+    vector<int> scoreList;
 
     while (score != 0) {
-        v.push_back(score % 10);
+        scoreList.push_back(score % 10);
         score /= 10;
     }
 
-    reverse(v.begin(), v.end());
+    reverse(scoreList.begin(), scoreList.end());
 
-    char number[10][3][3];
+    /*각 숫자 모양 배열*/
+    char numberShapeList[10][3][3];
 
     char one[3][4] = {
         " _ ",
@@ -84,38 +95,43 @@ int endPage(int score) {
         "|_|"
     };
 
+    /*배열에 숫자 모양 집어넣음*/
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            number[0][i][j] = zero[i][j];
-            number[1][i][j] = one[i][j];
-            number[2][i][j] = two[i][j];
-            number[3][i][j] = three[i][j];
-            number[4][i][j] = four[i][j];
-            number[5][i][j] = five[i][j];
-            number[6][i][j] = six[i][j];
-            number[7][i][j] = seven[i][j];
-            number[8][i][j] = eight[i][j];
-            number[9][i][j] = nine[i][j];
+            numberShapeList[0][i][j] = zero[i][j];
+            numberShapeList[1][i][j] = one[i][j];
+            numberShapeList[2][i][j] = two[i][j];
+            numberShapeList[3][i][j] = three[i][j];
+            numberShapeList[4][i][j] = four[i][j];
+            numberShapeList[5][i][j] = five[i][j];
+            numberShapeList[6][i][j] = six[i][j];
+            numberShapeList[7][i][j] = seven[i][j];
+            numberShapeList[8][i][j] = eight[i][j];
+            numberShapeList[9][i][j] = nine[i][j];
         }
     }
 
-    char scoreTxt[3][40];
+    /*스코어의 숫자 모양 배열에 저장*/
+    char scoreShapeList[3][40];
+
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 40; j++) {
-            scoreTxt[i][j] = ' ';
+            scoreShapeList[i][j] = ' ';
         }
     }
 
-    for (size_t i = 0; i < v.size(); i++) {
+    for (size_t i = 0; i < scoreList.size(); i++) {
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 3; k++) {
-                scoreTxt[j][4 * i + k] = number[v[i]][j][k];
+                scoreShapeList[j][4 * i + k] = numberShapeList[scoreList[i]][j][k];
             }
         }
     }
     
     while(1) {
         ch = getch();
+
+        /*테두리 그림*/
         for (int x = 0; x < WIDTH; x+=2) {
             mvprintw(0, x, "-=");
             mvprintw( HEIGHT - 1, x, "-=");
@@ -129,6 +145,7 @@ int endPage(int score) {
             mvprintw(y, WIDTH - 1, ":");
         }
 
+        /*화면 출력*/
         mvprintw(5, 36, "   ____    _    __  __ _____    _____     _______ ____  ");
         mvprintw(6, 36, "  / ___|  / \\  |  \\/  | ____|  / _ \\ \\   / / ____|  _ \\ ");
         mvprintw(7, 36, " | |  _  / _ \\ | |\\/| |  _|   | | | \\ \\ / /|  _| | |_) |");
@@ -139,39 +156,46 @@ int endPage(int score) {
         mvprintw(13, 43, "|_  |  | | |_| |_  '");
         mvprintw(14, 43, "__| |_ |_| | | |_  '");
 
+        if (isMaxScore) {
+            mvprintw(16, 43, "NEW RECORD!");
+        }
+
+        /*스코어 출력*/
         move(12, 65);
         for (int i = 0; i < 40; i++) {
-            printw("%c", scoreTxt[0][i]);
+            printw("%c", scoreShapeList[0][i]);
         }
         printw("\n");
 
         move(13, 65);
         for (int i = 0; i < 40; i++) {
-            printw("%c", scoreTxt[1][i]);
+            printw("%c", scoreShapeList[1][i]);
         }
 
         move(14, 65);
         for (int i = 0; i < 40; i++) {
-            printw("%c", scoreTxt[2][i]);
+            printw("%c", scoreShapeList[2][i]);
         }
 
         init_pair(1, COLOR_CYAN, COLOR_BLACK);
         init_pair(2, COLOR_RED, COLOR_BLACK);
 
+        /*입력에 따라 옵션 변경*/
         switch (ch) {
-            case 'w':
-                if (endingPage != 1) {
-                    endingPage--;
+            case KEY_UP:
+                if (option != 1) {
+                    option--;
                 } 
                 break;
-            case 's':
-                if (endingPage != 2) {
-                    endingPage++;
+            case KEY_DOWN:
+                if (option != 2) {
+                    option++;
                 }
                 break;
         }
 
-        switch (endingPage) {
+        /*입력에 따라 옵션 focus*/
+        switch (option) {
             case 1:
                 attron(COLOR_PAIR(1));
                 mvprintw(20, 60, "> Restart");
@@ -186,10 +210,11 @@ int endPage(int score) {
                 break;
         }
 
+        /*엔터 누를 시 옵션 선택*/
         if (ch == '\n') {
-            if (endingPage == 1) {
+            if (option == 1) {
                 return PLAY; //재도전
-            } else if (endingPage == 2) {
+            } else if (option == 2) {
                 return START; //시작페이지
             }
         }

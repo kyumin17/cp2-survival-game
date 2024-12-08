@@ -1,47 +1,53 @@
-#include <ncurses.h>
-#include <unistd.h>
 #include "page.hpp"
 #define WIDTH 130
 #define HEIGHT 30
-#define ms 1000
-
 
 int startPage() {
-    char ch;
-    int start = 1;
+    /*
+    게임 시작 화면
+    start 선택 시 게임 시작, quit 선택 시 게임 종료
+    */
+    
+    int ch;
+    int option = 1; //start, quit 옵션
+
     while (1) {
         ch = getch();
 
-        for (int x = 0; x < WIDTH; x+=2) {
+        /*테두리 출력*/
+        for (int x = 0; x < WIDTH; x += 2) {
             mvprintw(0, x, "-=");
             mvprintw( HEIGHT - 1, x, "-=");
         }
-        for(int y = 0; y < HEIGHT; y+=2) {
+        for(int y = 0; y < HEIGHT; y += 2) {
             mvprintw(y, 0, "|");
             mvprintw(y, WIDTH - 1, "|");
         }
-        for(int y = 0; y < HEIGHT; y+=3) {
+        for(int y = 0; y < HEIGHT; y += 3) {
             mvprintw(y, 0, ":");
             mvprintw(y, WIDTH - 1, ":");
         }
 
+        /*색 설정*/
         init_pair(1, COLOR_CYAN, COLOR_BLACK);
         init_pair(2, COLOR_RED, COLOR_BLACK);
 
+        /*키 입력에 따라 옵션 변경*/
         switch (ch) {
-            case 'w':
-                if(start != 1) {
-                    start--;
+            case KEY_UP:
+                if(option != 1) {
+                    option--;
                 }
                 break;
-            case 's':
-                if(start != 2) {
-                    start++;
+            case KEY_DOWN:
+                if(option != 2) {
+                    option++;
                 }
                 break;
         }
 
-        switch (start) {
+        /*키 입력에 따라 옵션 focus*/
+        switch (option) {
             case 1:
                 attron(COLOR_PAIR(1));
                 mvprintw(17, 56.5, "> Start Game");
@@ -56,6 +62,7 @@ int startPage() {
                 break;
         }
         
+        /*시작 화면 출력*/
         mvprintw(7, 29, "  ________                          _________ __                 __   ");
         mvprintw(8, 29, " /  _____/_____    _____   ____    /   _____//  |______ ________/  |_ ");
         mvprintw(9, 29, "/   \\  ___\\__  \\  /     \\_/ __ \\   \\_____  \\   __\\__  \\_  __ \\   __\\");
@@ -95,14 +102,16 @@ int startPage() {
 
         refresh();
 
+        /*엔터 누르면 옵션 활성화*/
         if (ch == '\n') {
-            if (start == 1) {
+            if (option == 1) {
                 return PLAY;
-            } else if (start == 2) {
+            } else if (option == 2) {
                 clear();
-                if (!checkQuitStart()) {
+                if (checkQuitStart()) {
                     return QUIT;
                 }
+                clear();
             }
         }
     }
