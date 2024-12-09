@@ -16,22 +16,22 @@ void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr,
     switch (input) {
         case LEFT:
             direction = LEFT;
-            changeCharacter(playerCharacter.left);
+            changeCharacter(playerCharacter.left, width, height);
             dx = 1;
             break;
         case RIGHT:
             direction = RIGHT;
-            changeCharacter(playerCharacter.right);
+            changeCharacter(playerCharacter.right, width, height);
             dx = -1;
             break;
         case BACK:
             direction = BACK;
-            changeCharacter(playerCharacter.back);
+            changeCharacter(playerCharacter.back, width, height);
             dy = -1;
             break;
         case FRONT:
             direction = FRONT;
-            changeCharacter(playerCharacter.front);
+            changeCharacter(playerCharacter.front, width, height);
             dy = 1;
             break;
     }
@@ -58,7 +58,7 @@ bool Player::isDamaged(vector<Enemy*>& enemyArr) {
         int ew = enemyArr[i] -> width;
         int eh = enemyArr[i] -> height;
 
-        if (x + width >= ex && x <= ex + ew && y + height >= ey && y <= ey + eh) { //overlap 판단
+        if (x + width - 1 >= ex && x <= ex + ew - 1 && y + height - 1 >= ey && y <= ey + eh - 1) { //overlap 판단
             return true;
         }
     }

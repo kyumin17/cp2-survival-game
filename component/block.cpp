@@ -23,8 +23,8 @@ void Block::draw() {
 
     /*화면 안의 블럭 영역만 출력*/
     if (isAttack) attron(COLOR_PAIR(10)); //피해 입힐 시 초록색
-    for (int row = std::max(r, 0); row < std::min(r + height, HEIGHT - 1); row++) {
-        for (int col = std::max(c, 0); col < std::min(c + 2 * height, WIDTH - 1); col++) {
+    for (int row = std::max(r, 0); row < std::min(r + height, HEIGHT); row++) {
+        for (int col = std::max(c, 0); col < std::min(c + 2 * height, WIDTH); col++) {
             mvaddch(row, col, ACS_CKBOARD);
         }
     }
@@ -36,7 +36,7 @@ bool Block::isOverlap(int cx, int cy, int cw, int ch) {
     다른 컴포넌트와 겹치는지 확인
     */
 
-    if (x <= cx + cw && cx <= x + height * 2 - 1 && y <= cy + ch && cy <= y + height) {
+    if (x <= cx + cw - 1 && cx <= x + height * 2 - 1 && y <= cy + ch - 1 && cy <= y + height - 1) {
         return true;
     } else {
         return false;

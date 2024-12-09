@@ -134,15 +134,27 @@ EnemyCharacter::EnemyCharacter() {
     int col2 = 3;
 
     enemy2 = new Cell*[row2];
+    enemy2Dead = new Cell*[5];
 
     for (int i = 0; i < row2; i++) {
         enemy2[i] = new Cell[col2];
+    }
+
+    for (int i = 0; i < 7; i++) {
+        enemy2Dead[i] = new Cell[7];
     }
 
     for (int i = 0; i < row2; i++) {
         for (int j = 0; j < col2; j++) {
             enemy2[i][j].value = enemy2Txt[i][j];
             enemy2[i][j].color = COLOR_GREEN;
+        }
+    }
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 7; j++) {
+            enemy2Dead[i][j].value = enemy2DeadTxt[i][j];
+            enemy2Dead[i][j].color = COLOR_GREEN;
         }
     }
 
@@ -168,9 +180,13 @@ EnemyCharacter::EnemyCharacter() {
     int col4 = 4;
 
     enemy4 = new Cell*[row4];
+    enemy4Div1 = new Cell*[1];
+    enemy4Div2 = new Cell*[1];
 
     for (int i = 0; i < row4; i++) {
         enemy4[i] = new Cell[col4];
+        enemy4Div1[i] = new Cell[4];
+        enemy4Div2[i] = new Cell[3];
     }
 
     for (int i = 0; i < row4; i++) {
@@ -178,6 +194,16 @@ EnemyCharacter::EnemyCharacter() {
             enemy4[i][j].value = enemy4Txt[i][j];
             enemy4[i][j].color = COLOR_GREEN;
         }
+    }
+
+    for (int i = 0; i < 4; i++) {
+        enemy4Div1[0][i].value = enemy4Div1Txt[0][i];
+        enemy4Div1[0][i].color = COLOR_GREEN;
+    }
+
+    for (int i = 0; i < 3; i++) {
+        enemy4Div2[0][i].value = enemy4Div2Txt[0][i];
+        enemy4Div2[0][i].color = COLOR_GREEN;
     }
 }
 

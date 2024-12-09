@@ -30,6 +30,7 @@ class Game {
         int time;
         int score;
         bool end;
+        int enemyVelocity;
 
         Game();
         int getDirection(char ch);
@@ -43,4 +44,5 @@ class Game {
         void updateWeapon(int input);
         void attack();
         void printBackground();
+        void updateEnemy();
 };

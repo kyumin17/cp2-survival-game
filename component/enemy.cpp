@@ -5,6 +5,7 @@ Enemy::Enemy(int _type, int _x, int _y, int _width, int _height, Cell** _charact
 : Component(_x, _y, _width, _height, _character) {
     type = _type;
     direction = -1;
+    surviveTime = 0;
 }
 
 void Enemy::moveX(int playerX, int playerY, vector<Block*>& blockArr) {

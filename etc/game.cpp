@@ -6,10 +6,11 @@ Game::Game() {
     bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
     sword = new Sword(player -> x + 3, player -> y - 2, swordShape.swordRight[0]);
     eraser = new Eraser(player -> x - 2, player -> y - 1, eraserShape.eraserNonactive);
-    enemyNum = 10;
+    enemyNum = 20;
     time = 0;
     score = 0;
     end = false;
+    enemyVelocity = 27;
 }
 
 int Game::getDirection(char ch) {
@@ -60,11 +61,11 @@ void Game::createEnemy() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> disX(-30, 160);
-    std::uniform_int_distribution<int> disY(-30, 60);
+    std::uniform_int_distribution<int> disY(-20, 50);
     std::uniform_int_distribution<int> disType(1, 4);
 
     int createNum = enemyNum - enemyArr.size();
-    if (score != 0) score += createNum;
+    if (score != 0 && createNum > 0) score += createNum;
 
     //적 생성
     for (int i = 0; i < createNum; i++) {
@@ -92,7 +93,7 @@ void Game::createEnemy() {
             case 4:
                 ew = 4;
                 eh = 2;
-                break; 
+                break;
         }
 
         for (size_t i = 0; i < blockArr.size(); i++) { //블럭과 만남
@@ -126,6 +127,7 @@ void Game::draw() {
     /*
     오브젝트들을 화면에 출력
     */
+
     player -> draw(&display);
     
     switch(weaponType) {
@@ -161,7 +163,10 @@ void Game::moveEnemy() {
     */
 
     for (size_t i = 0; i < enemyArr.size(); i++) {
-        if (time % 20 == 0) {
+        if (time % enemyVelocity == 0) {
+            if (enemyArr[i] -> surviveTime++ == 100) { //블럭에 막혀서 못 오는 경우 대비
+                enemyArr.erase(enemyArr.begin() + i);
+            }
             enemyArr[i] -> moveX(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
             if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 enemyArr[i] -> x -= enemyArr[i] -> dx;
@@ -169,6 +174,9 @@ void Game::moveEnemy() {
             enemyArr[i] -> moveY(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
             if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 enemyArr[i] -> y -= enemyArr[i] -> dy;
+            }
+            if (enemyArr[i] -> type == ENEMY2EXPLORE) {
+                enemyArr.erase(enemyArr.begin() + i);
             }
         }
     }
@@ -261,7 +269,7 @@ void Game::updateWeapon(int input) {
                 }
                 if (eraser -> attackTime == eraser -> cooldown) {
                     eraser -> attackTime = 0;
-                    eraser -> changeCharacter(eraserShape.eraserNonactive);
+                    eraser -> changeCharacter(eraserShape.eraserNonactive, eraser -> width, eraser -> height);
                 }
             }
             break;
@@ -308,4 +316,24 @@ void Game::printBackground() {
             break;
     }
     attroff(COLOR_PAIR(11));
+}
+
+void Game::updateEnemy() {
+    /*
+    if (score > 30) {
+        enemyNum = 20;
+    } else if (score > 50) {
+        enemyVelocity -= 5;
+        enemyNum = 30;
+    } else if (score > 100) {
+        enemyNum = 30;
+    } else if (score > 150) {
+        enemyNum = 40;
+        enemyVelocity -= 5;
+    } else if (score > 200) {
+        enemyNum = 40;
+    } else if (score > 300) {
+        enemyNum = 50;
+    }
+    */
 }
