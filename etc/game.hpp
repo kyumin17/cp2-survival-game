@@ -26,15 +26,16 @@ class Game {
         SwordShape swordShape;
         EraserShape eraserShape;
 
-        int enemyNum;
+        int enemyNum; //맵의 전체 적 개수
         int time;
         int score;
         bool end;
         int enemyVelocity;
+        int freq[4];
 
         Game();
         int getDirection(char ch);
-        void createMap();
+        void createBlock(int blockNum);
         void createEnemy();
         void draw();
         void moveEnemy();

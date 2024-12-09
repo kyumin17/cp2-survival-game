@@ -8,7 +8,7 @@ int playPage(int& score) {
     char ch;
     Game game;
 
-    game.createMap();
+    game.createBlock(2500);
 
     while (!game.end) {
         game.time++;

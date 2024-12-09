@@ -47,11 +47,13 @@ bool checkQuitStart() {
         /*키 입력에 따라 옵션 조정*/
         switch (ch) {
             case KEY_UP:
+            case 'w':
                 if (option != 1) {
                     option--;
                 } 
                 break;
             case KEY_DOWN:
+            case 's':
                 if (option != 3) {
                     option++;
                 }
@@ -120,11 +122,13 @@ bool checkQuitStage() {
         /*키 입력에 따라 옵션 조정*/
         switch (ch) {
             case KEY_UP:
+            case 'w':
                 if(option != 1) {
                     option--;
                 }
                 break;
             case KEY_DOWN:
+            case 's':
                 if(option != 2) {
                     option++;
                 }

@@ -6,14 +6,22 @@ Game::Game() {
     bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
     sword = new Sword(player -> x + 3, player -> y - 2, swordShape.swordRight[0]);
     eraser = new Eraser(player -> x - 2, player -> y - 1, eraserShape.eraserNonactive);
-    enemyNum = 20;
+    enemyNum = 10;
     time = 0;
     score = 0;
     end = false;
-    enemyVelocity = 27;
+    enemyVelocity = 40;
+    freq[0] = 10;
+    freq[1] = 0;
+    freq[2] = 0;
+    freq[3] = 0;
 }
 
 int Game::getDirection(char ch) {
+    /*
+    입력을 받고 이를 방향으로 변환
+    */
+
     switch(ch) {
         case 'a':
             return LEFT;
@@ -32,7 +40,11 @@ int Game::getDirection(char ch) {
     }
 }
 
-void Game::createMap() {
+void Game::createBlock(int blockNum) {
+    /*
+    장애물을 랜덤하게 생성
+    */
+
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -41,7 +53,7 @@ void Game::createMap() {
     std::uniform_int_distribution<int> disAttack(1, 3);
 
     //block 생성
-    for (int i = 0; i < 2500; i++) {
+    for (int i = 0; i < blockNum; i++) {
         if (disAttack(gen) == 1) {
             blockArr.push_back(new Block(disPos(gen), disPos(gen), disLen(gen), true));
         } else {
@@ -49,8 +61,9 @@ void Game::createMap() {
         }
     }
 
-    for (int i = 0; i < 2500; i++) {
-        if (blockArr[i] -> isOverlap(player -> x, player -> y, player -> width, player -> height)) { //플레이어 위치에 블럭 생성되지 않도록
+    //플레이어 위치에 블럭 생성되지 않도록 함
+    for (int i = 0; i < blockNum; i++) {
+        if (blockArr[i] -> isOverlap(player -> x, player -> y, player -> width, player -> height)) {
             blockArr.erase(blockArr.begin() + i);
         }
     }
@@ -62,17 +75,24 @@ void Game::createEnemy() {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> disX(-30, 160);
     std::uniform_int_distribution<int> disY(-20, 50);
-    std::uniform_int_distribution<int> disType(1, 4);
 
     int createNum = enemyNum - enemyArr.size();
-    if (score != 0 && createNum > 0) score += createNum;
+    int totFreq = freq[0] + freq[1] + freq[2] + freq[3];
+
+    std::uniform_int_distribution<int> disTypeSeed(1, totFreq);
+    
+    //생성된 적만큼 점수 증가
+    if (score != 0 && createNum > 0) {
+        score += createNum;
+    }
 
     //적 생성
     for (int i = 0; i < createNum; i++) {
         int ex = disX(gen); //적 x좌표
         int ey = disY(gen); //적 y좌표
         int ew, eh;
-        int etype = disType(gen);
+        int type = 4;
+        int seed = disTypeSeed(gen);
 
         //예외처리
         bool isValidPos = true;
@@ -80,7 +100,16 @@ void Game::createEnemy() {
             isValidPos = false;
         }
 
-        switch(etype) {
+        //freq 배열의 확률로 생성
+        for (int i = 0; i < 4; i++) {
+            seed -= freq[i];
+            if (seed <= 0) {
+                type = i + 1;
+                break;
+            }
+        }
+
+        switch(type) {
             case 1:
             case 2:
                 ew = 3;
@@ -106,7 +135,7 @@ void Game::createEnemy() {
         if (!isValidPos) continue;
 
         //적 생성
-        switch(etype) {
+        switch(type) {
             case 1:
                 enemyArr.push_back(new Enemy(ENEMY1, ex, ey, ew, eh, enemyCharacter.enemy1));
                 break;
@@ -158,12 +187,32 @@ void Game::draw() {
 
 void Game::moveEnemy() {
     /*
-    20프레임마다 적 움직임
+    일정 프레임마다 적 움직임
     앞에 블럭 혹은 다른 적 있을 시 피해서 감
     */
 
     for (size_t i = 0; i < enemyArr.size(); i++) {
-        if (time % enemyVelocity == 0) {
+            
+        if (enemyArr[i] -> type == ENEMY3 && time % (int)(enemyVelocity / 3) == 0) {
+            if (enemyArr[i] -> surviveTime++ == 100) { //블럭에 막혀서 못 오는 경우 대비
+                enemyArr.erase(enemyArr.begin() + i);
+            }
+            enemyArr[i] -> moveX(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
+            if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+                enemyArr[i] -> x -= enemyArr[i] -> dx;
+            }
+            if (enemyArr[i] -> direction == LEFT) enemyArr[i] -> changeCharacter(enemyCharacter.enemy3Left, 4, 1);
+            if (enemyArr[i] -> direction == RIGHT) enemyArr[i] -> changeCharacter(enemyCharacter.enemy3Right, 4, 1);
+            if (time % (2 * enemyVelocity) == 0) { //y축 이동이 느림
+                enemyArr[i] -> moveY(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
+                if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+                    enemyArr[i] -> y -= enemyArr[i] -> dy;
+                }
+            }
+            continue;
+        }
+
+        if (enemyArr[i] -> type != ENEMY3 && time % enemyVelocity == 0) {
             if (enemyArr[i] -> surviveTime++ == 100) { //블럭에 막혀서 못 오는 경우 대비
                 enemyArr.erase(enemyArr.begin() + i);
             }
@@ -179,6 +228,7 @@ void Game::moveEnemy() {
                 enemyArr.erase(enemyArr.begin() + i);
             }
         }
+
     }
 }
 
@@ -319,21 +369,25 @@ void Game::printBackground() {
 }
 
 void Game::updateEnemy() {
-    /*
-    if (score > 30) {
+    if (50 >= score && score > 30) {
         enemyNum = 20;
-    } else if (score > 50) {
-        enemyVelocity -= 5;
+        freq[1] = 5;
+    } else if (100 >= score && score > 50) {
+        enemyVelocity = 35;
+        enemyNum = 25;
+        freq[2] = 5;
+    } else if (150 >= score && score > 100) {
+        enemyVelocity = 27;
         enemyNum = 30;
-    } else if (score > 100) {
-        enemyNum = 30;
-    } else if (score > 150) {
-        enemyNum = 40;
-        enemyVelocity -= 5;
-    } else if (score > 200) {
-        enemyNum = 40;
+        freq[1] = 10;
+        freq[2] = 10;
+        freq[3] = 5;
+    } else if (200 >= score && score > 150) {
+        enemyVelocity = 25;
+        freq[3] = 10;
+    } else if (300 >= score && score > 200) {
+        enemyNum = 35;
     } else if (score > 300) {
-        enemyNum = 50;
+        enemyNum = 40;
     }
-    */
 }

@@ -79,24 +79,12 @@ EnemyCharacter::EnemyCharacter() {
         "   |   "
     };
 
-    char enemy3LeftTxt[1][5] = {
+    char enemy3RightTxt[1][5] = {
        "~~~@"
     };
 
-    char enemy3RightTxt[1][5] = {
+    char enemy3LeftTxt[1][5] = {
        "@~~~"
-    };
-
-    char enemy3FrontTxt[3][2] = {
-        "(",
-        ")",
-        "@"
-    };
-
-    char enemy3BackTxt[3][2] = {
-        "@",
-        "(",
-        ")"
     };
 
     char enemy4Txt[2][5] = {
@@ -163,15 +151,19 @@ EnemyCharacter::EnemyCharacter() {
     int col3 = 4;
 
     enemy3Right = new Cell*[row3];
+    enemy3Left = new Cell*[row3];
 
     for (int i = 0; i < row3; i++) {
         enemy3Right[i] = new Cell[col3];
+        enemy3Left[i] = new Cell[col3];
     }
 
     for (int i = 0; i < row3; i++) {
         for (int j = 0; j < col3; j++) {
             enemy3Right[i][j].value = enemy3RightTxt[i][j];
             enemy3Right[i][j].color = COLOR_GREEN;
+            enemy3Left[i][j].value = enemy3LeftTxt[i][j];
+            enemy3Left[i][j].color = COLOR_GREEN;
         }
     }
 
@@ -323,9 +315,9 @@ SwordShape::SwordShape() {
     };
 
     char swordLeft1[6][6] = {
-        "    \\",
-        "   \\ ",
         "  \\  ",
+        "   \\ ",
+        "    \\",
         "     ",
         "     ",
         "     "
