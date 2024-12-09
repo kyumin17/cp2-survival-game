@@ -71,12 +71,12 @@ EnemyCharacter::EnemyCharacter() {
         "/ \\"
     };
 
-    char enemy2DeadTxt[5][8] = {
-        "   |   ",
-        " \\   / ",
-        "-     -",
-        " /   \\ ",
-        "   |   "
+    char enemy2DeadTxt[5][14] = {
+        "      |      ",
+        "    \\   /    ",
+        "   -     -   ",
+        "    /   \\    ",
+        "      |      "
     };
 
     char enemy3RightTxt[1][5] = {
@@ -118,29 +118,26 @@ EnemyCharacter::EnemyCharacter() {
     }
 
     //enemy2
-    int row2 = 3;
-    int col2 = 3;
+    enemy2 = new Cell*[3];
+    enemy2Dead = new Cell*[7];
 
-    enemy2 = new Cell*[row2];
-    enemy2Dead = new Cell*[5];
-
-    for (int i = 0; i < row2; i++) {
-        enemy2[i] = new Cell[col2];
+    for (int i = 0; i < 3; i++) {
+        enemy2[i] = new Cell[3];
     }
 
-    for (int i = 0; i < 7; i++) {
-        enemy2Dead[i] = new Cell[7];
+    for (int i = 0; i < 5; i++) {
+        enemy2Dead[i] = new Cell[13];
     }
 
-    for (int i = 0; i < row2; i++) {
-        for (int j = 0; j < col2; j++) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
             enemy2[i][j].value = enemy2Txt[i][j];
             enemy2[i][j].color = COLOR_GREEN;
         }
     }
 
     for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < 13; j++) {
             enemy2Dead[i][j].value = enemy2DeadTxt[i][j];
             enemy2Dead[i][j].color = COLOR_GREEN;
         }

@@ -146,19 +146,23 @@ void Bow::moveArrows() {
 void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
     EnemyCharacter enemyCharacter;
 
-    for (size_t i = 0; i < arrowArr.size(); i++) {
+    size_t s = arrowArr.size();
+    for (size_t i = 0; i < s; i++) {
         int enemyIdx = arrowArr[i] -> isHitEnemy(enemyArr);
         if (enemyIdx != -1) {
             if (enemyArr[enemyIdx] -> type == ENEMY4) {
                 enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[enemyIdx] -> x, enemyArr[enemyIdx] -> y + 1, 4, 1, enemyCharacter.enemy4Div1));
                 enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[enemyIdx] -> x + 3, enemyArr[enemyIdx] -> y - 1, 4, 1, enemyCharacter.enemy4Div1));
             } else if (enemyArr[enemyIdx] -> type == ENEMY4DIV1) {
-                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x + 3, enemyArr[enemyIdx] -> y, 3, 1, enemyCharacter.enemy4Div2)); 
-                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x - 3, enemyArr[enemyIdx] -> y, 3, 1, enemyCharacter.enemy4Div2));
+                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x + 3, enemyArr[enemyIdx] -> y - 1, 3, 1, enemyCharacter.enemy4Div2)); 
+                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x, enemyArr[enemyIdx] -> y + 1, 3, 1, enemyCharacter.enemy4Div2));
             } else if (enemyArr[enemyIdx] -> type == ENEMY2) {
-                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[enemyIdx] -> x, enemyArr[enemyIdx] -> y, 7, 5, enemyCharacter.enemy2Dead));
+                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[enemyIdx] -> x - 5, enemyArr[enemyIdx] -> y - 1, 13, 5, enemyCharacter.enemy2Dead));
             }
-            enemyArr.erase(enemyArr.begin() + enemyIdx);
+
+            if (enemyArr[enemyIdx] -> type != ENEMY2EXPLORE) {
+                enemyArr.erase(enemyArr.begin() + enemyIdx);
+            }
         } else if (arrowArr[i] -> isHitBlock(blockArr)) {
             arrowArr.erase(arrowArr.begin() + i);
         }
@@ -186,7 +190,7 @@ void Sword::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
         x = playerX - 5;
         changeCharacter(swordShape.swordLeft[attackTime - 1], width, height);
     }
-
+    
     for (size_t i = 0; i < enemyArr.size(); i++) {
         int ex = enemyArr[i] -> x;
         int ey = enemyArr[i] -> y;
@@ -201,9 +205,12 @@ void Sword::attack(int input, int playerX, vector<Enemy*>& enemyArr) {
                 enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[i] -> x + 3, enemyArr[i] -> y - 1, 3, 1, enemyCharacter.enemy4Div2)); 
                 enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[i] -> x, enemyArr[i] -> y + 1, 3, 1, enemyCharacter.enemy4Div2));
             } else if (enemyArr[i] -> type == ENEMY2) {
-                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[i] -> x, enemyArr[i] -> y, 7, 5, enemyCharacter.enemy2Dead));
+                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[i] -> x - 5, enemyArr[i] -> y - 1, 13, 5, enemyCharacter.enemy2Dead));
             }
-            enemyArr.erase(enemyArr.begin() + i);
+
+            if (enemyArr[i] -> type != ENEMY2EXPLORE) {
+                enemyArr.erase(enemyArr.begin() + i);
+            }
         }
     }
 }
@@ -230,6 +237,7 @@ Eraser::Eraser(int _x, int _y, Cell** _character)
 
 void Eraser::attack(vector<Enemy*>& enemyArr) {
     EraserShape eraserShape;
+    EnemyCharacter enemyCharacter;
 
     if (attackTime > 4) {
         changeCharacter(eraserShape.eraserNonactive, width, height);
@@ -244,7 +252,19 @@ void Eraser::attack(vector<Enemy*>& enemyArr) {
         int eh = enemyArr[i] -> height;
 
         if (y <= ey + eh - 1 && ey <= y + height - 1 && x <= ex + ew - 1 && ex <= x + width - 1) {
-            enemyArr.erase(enemyArr.begin() + i);
+            if (enemyArr[i] -> type == ENEMY4) {
+                enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[i] -> x, enemyArr[i] -> y + 1, 4, 1, enemyCharacter.enemy4Div1));
+                enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[i] -> x + 3, enemyArr[i] -> y - 1, 4, 1, enemyCharacter.enemy4Div1));
+            } else if (enemyArr[i] -> type == ENEMY4DIV1) {
+                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[i] -> x + 3, enemyArr[i] -> y - 1, 3, 1, enemyCharacter.enemy4Div2)); 
+                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[i] -> x, enemyArr[i] -> y + 1, 3, 1, enemyCharacter.enemy4Div2));
+            } else if (enemyArr[i] -> type == ENEMY2) {
+                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[i] -> x - 5, enemyArr[i] -> y - 1, 13, 5, enemyCharacter.enemy2Dead));
+            }
+
+            if (enemyArr[i] -> type != ENEMY2EXPLORE) {
+                enemyArr.erase(enemyArr.begin() + i);
+            }
         }
     }
 }

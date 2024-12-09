@@ -11,8 +11,8 @@ Game::Game() {
     score = 0;
     end = false;
     enemyVelocity = 40;
-    freq[0] = 10;
-    freq[1] = 0;
+    freq[0] = 0;
+    freq[1] = 10;
     freq[2] = 0;
     freq[3] = 0;
 }
@@ -267,6 +267,7 @@ void Game::updateWeapon(int input) {
     /*
     프레임마다 무기 update
     */
+   
     switch (weaponType) {
         case 1:
             //플레이어 방향에 따라 활 방향 변경

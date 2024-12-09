@@ -50,14 +50,14 @@ int playPage(int& score) {
                 break;
         }
 
-        game.end = game.end || game.player -> isDamaged(game.enemyArr); //적에 닿을 시 게임 종료
-
         if (game.time % 500 == 0) {
             
         }
         if (game.time % 100 == 0) {
             game.score += 1; //시간에 따라 스코어 증가
         }
+        
+        game.end = game.end || game.player -> isDamaged(game.enemyArr); //적에 닿을 시 게임 종료
 
         usleep(10000); //10ms
     }

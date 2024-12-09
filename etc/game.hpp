@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <random>
-#include <cmath>
 #include "../component/player.hpp"
 #include "../component/enemy.hpp"
 #include "../component/weapon.hpp"
