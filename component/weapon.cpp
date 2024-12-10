@@ -171,7 +171,7 @@ void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
 
 /*검*/
 Sword::Sword(int _x, int _y, Cell** _character)
-: Weapon(_x, _y, 5, 6, 15, _character) {
+: Weapon(_x, _y, 5, 6, 7, _character) {
     direction = RIGHT;
 }
 
@@ -239,7 +239,7 @@ void Eraser::attack(vector<Enemy*>& enemyArr) {
     EraserShape eraserShape;
     EnemyCharacter enemyCharacter;
 
-    if (attackTime > 4) {
+    if (attackTime > 8) {
         changeCharacter(eraserShape.eraserNonactive, width, height);
         return;
     }

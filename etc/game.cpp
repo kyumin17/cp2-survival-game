@@ -11,8 +11,8 @@ Game::Game() {
     score = 0;
     end = false;
     enemyVelocity = 40;
-    freq[0] = 0;
-    freq[1] = 10;
+    freq[0] = 10;
+    freq[1] = 0;
     freq[2] = 0;
     freq[3] = 0;
 }
@@ -373,22 +373,23 @@ void Game::updateEnemy() {
     if (50 >= score && score > 30) {
         enemyNum = 20;
         freq[1] = 5;
-    } else if (100 >= score && score > 50) {
+    } else if (70 >= score && score > 50) {
+        freq[2] = 5;
+    } else if (100 >= score && score > 70) {
         enemyVelocity = 35;
         enemyNum = 25;
-        freq[2] = 5;
+        freq[3] = 10;
     } else if (150 >= score && score > 100) {
-        enemyVelocity = 27;
+        enemyVelocity = 30;
         enemyNum = 30;
         freq[1] = 10;
         freq[2] = 10;
-        freq[3] = 5;
     } else if (200 >= score && score > 150) {
         enemyVelocity = 25;
         freq[3] = 10;
     } else if (300 >= score && score > 200) {
-        enemyNum = 35;
+        enemyNum = 32;
     } else if (score > 300) {
-        enemyNum = 40;
+        enemyNum = 35;
     }
 }
