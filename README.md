@@ -1,15 +1,24 @@
 # ascii-art survival game
-+ development environment
-WSL: Ubuntu
+### development environment
+WSL(Ubuntu)
 
-+ run
+### run
+```
 make
 ./game
+```
 
-+ control
-w - up
-a - left
-s - down
-d - right
-i - attack
-1, 2, 3 - change weapon
+### control
+w: up
+
+a: left
+
+s: down
+
+d: right
+
+i: attack
+
+1, 2: change weapon
+
+esc: quit

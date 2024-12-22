@@ -1,101 +1,50 @@
 #include <vector>
 #include <algorithm>
 #include "page.hpp"
-#define WIDTH 130
-#define HEIGHT 30
+#include "../asset/ui.hpp"
 
 using namespace std;
+
+// 숫자 모양 배열
+char one[3][4] = {" _ ", " | ", " | "};
+char two[3][4] = {" _ ", " _|", "|_ "};
+char three[3][4] = {" _ ", " _|", " _|"};
+char four[3][4] = {"  _", "|_|", "  |"};
+char five[3][4] = {" _ ", "|_ ", " _|"};
+char six[3][4] = {" _ ", "|_ ", "|_|"};
+char seven[3][4] = {" _ ", "  |", "  |"};
+char eight[3][4] = {" _ ", "|_|", "|_|"};
+char nine[3][4] = {" _ ", "|_|", " _|"};
+char zero[3][4] = {" _ ", "| |", "|_|"};
 
 int endPage(int score, int& maxScore) {
     /*
     게임 종료 화면
-    retry 선택 시 게임 재시작, home 클릭 시 start page로 이동
+    retry 선택 시 PLAY 반환, home 선택 시 START 반환
     */
 
     int ch;
     int option = 1;
     bool isMaxScore = false;
 
-    /*최대 점수 갱신*/
+    // 최대 점수 갱신
     if (maxScore < score) {
         maxScore = score;
         isMaxScore = true;
     }
 
-    /*점수의 각 자릿수를 저장*/
-    vector<int> scoreList;
+    vector<int> scoreDigitArr; // 점수의 각 자릿수
 
     while (score != 0) {
-        scoreList.push_back(score % 10);
+        scoreDigitArr.push_back(score % 10);
         score /= 10;
     }
 
-    reverse(scoreList.begin(), scoreList.end());
+    reverse(scoreDigitArr.begin(), scoreDigitArr.end());
 
-    /*각 숫자 모양 배열*/
-    char numberShapeList[10][3][3];
+    char numberShapeList[10][3][3]; // 각 숫자 모양 배열
 
-    char one[3][4] = {
-        " _ ",
-        " | ",
-        " | "
-    };
-
-    char two[3][4] = {
-        " _ ",
-        " _|",
-        "|_ "
-    };
-
-    char three[3][4] = {
-        " _ ",
-        " _|",
-        " _|"
-    };
-
-    char four[3][4] = {
-        "  _",
-        "|_|",
-        "  |"
-    };
-
-    char five[3][4] = {
-        " _ ",
-        "|_ ",
-        " _|"
-    };
-
-    char six[3][4] = {
-        " _ ",
-        "|_ ",
-        "|_|"
-    };
-
-    char seven[3][4] = {
-        " _ ",
-        "  |",
-        "  |"
-    };
-
-    char eight[3][4] = {
-        " _ ",
-        "|_|",
-        "|_|"
-    };
-
-    char nine[3][4] = {
-        " _ ",
-        "|_|",
-        " _|"
-    };
-
-    char zero[3][4] = {
-        " _ ",
-        "| |",
-        "|_|"
-    };
-
-    /*배열에 숫자 모양 집어넣음*/
+    // 배열에 숫자 모양 넣음
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             numberShapeList[0][i][j] = zero[i][j];
@@ -111,8 +60,7 @@ int endPage(int score, int& maxScore) {
         }
     }
 
-    /*스코어의 숫자 모양 배열에 저장*/
-    char scoreShapeList[3][40];
+    char scoreShapeList[3][40]; // 스코어 모양
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 40; j++) {
@@ -120,10 +68,11 @@ int endPage(int score, int& maxScore) {
         }
     }
 
-    for (size_t i = 0; i < scoreList.size(); i++) {
+    for (size_t i = 0; i < scoreDigitArr.size(); i++) {
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 3; k++) {
-                scoreShapeList[j][4 * i + k] = numberShapeList[scoreList[i]][j][k];
+                // 4칸 단위로 숫자 받아옴
+                scoreShapeList[j][4 * i + k] = numberShapeList[scoreDigitArr[i]][j][k];
             }
         }
     }
@@ -131,36 +80,17 @@ int endPage(int score, int& maxScore) {
     while(1) {
         ch = getch();
 
-        /*테두리 그림*/
-        for (int x = 0; x < WIDTH; x+=2) {
-            mvprintw(0, x, "-=");
-            mvprintw( HEIGHT - 1, x, "-=");
-        }
-        for(int y = 0; y < HEIGHT; y+=2) {
-            mvprintw(y, 0, "|");
-            mvprintw(y, WIDTH - 1, "|");
-        }
-        for(int y = 0; y < HEIGHT; y+=3) {
-            mvprintw(y, 0, ":");
-            mvprintw(y, WIDTH - 1, ":");
-        }
+        // 테두리 출력
+        drawBorder();
 
-        /*화면 출력*/
-        mvprintw(5, 36, "   ____    _    __  __ _____    _____     _______ ____  ");
-        mvprintw(6, 36, "  / ___|  / \\  |  \\/  | ____|  / _ \\ \\   / / ____|  _ \\ ");
-        mvprintw(7, 36, " | |  _  / _ \\ | |\\/| |  _|   | | | \\ \\ / /|  _| | |_) |");
-        mvprintw(8, 36, " | |_| |/ ___ \\| |  | | |___  | |_| |\\ V / | |___|  _ < ");
-        mvprintw(9, 36, "  \\____/_/   \\_\\_|  |_|_____|  \\___/  \\_/  |_____|_| \\_\\");
-        
-        mvprintw(12, 43, "__  __ __  __  __");
-        mvprintw(13, 43, "|_  |  | | |_| |_  '");
-        mvprintw(14, 43, "__| |_ |_| | | |_  '");
+        // 화면 출력
+        drawEndText();
 
         if (isMaxScore) {
             mvprintw(16, 43, "NEW RECORD!");
         }
 
-        /*스코어 출력*/
+        // 스코어 출력
         move(12, 65);
         for (int i = 0; i < 40; i++) {
             printw("%c", scoreShapeList[0][i]);
@@ -177,47 +107,44 @@ int endPage(int score, int& maxScore) {
             printw("%c", scoreShapeList[2][i]);
         }
 
-        init_pair(1, COLOR_CYAN, COLOR_BLACK);
-        init_pair(2, COLOR_RED, COLOR_BLACK);
-
-        /*입력에 따라 옵션 변경*/
+        // 입력에 따라 옵션 변경
         switch (ch) {
             case KEY_UP:
-            case 'w':
+            case 'w': // 위로 이동
                 if (option != 1) {
                     option--;
                 } 
                 break;
             case KEY_DOWN:
-            case 's':
+            case 's': // 아래로 이동
                 if (option != 2) {
                     option++;
                 }
                 break;
         }
 
-        /*입력에 따라 옵션 focus*/
+        // 선택 옵션에 따라 디스플레이 변경
         switch (option) {
-            case 1:
-                attron(COLOR_PAIR(1));
+            case 1: // 재시작 선택
+                attron(COLOR_PAIR(COLOR_CYAN));
                 mvprintw(20, 60, "> Restart");
-                attroff(COLOR_PAIR(1));
+                attroff(COLOR_PAIR(COLOR_CYAN));
                 mvprintw(22, 60, "  Home");
                 break;
-            case 2:
+            case 2: // 시작 화면 선택
                 mvprintw(20, 60, "  Restart");
-                attron(COLOR_PAIR(2));
+                attron(COLOR_PAIR(COLOR_RED));
                 mvprintw(22, 60, "> Home");
-                attroff(COLOR_PAIR(2));
+                attroff(COLOR_PAIR(COLOR_RED));
                 break;
         }
 
-        /*엔터 누를 시 옵션 선택*/
+        // 엔터 누를 시 옵션 선택
         if (ch == '\n') {
             if (option == 1) {
-                return PLAY; //재도전
+                return PLAY;
             } else if (option == 2) {
-                return START; //시작페이지
+                return START;
             }
         }
 

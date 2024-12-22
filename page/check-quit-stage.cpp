@@ -1,16 +1,16 @@
 #include "page.hpp"
 #include "../asset/ui.hpp"
 
-int startPage() {
+bool checkQuitStagePage() {
     /*
-    게임 시작 화면
-    start 선택 시 PLAY 반환, quit 선택 시 QUIT 반환
+    게임 도중 ESC 클릭 시 나오는 플레이 중단 확인 화면
+    중단한다면 true를, 아니라면 false 반환
     */
-    
-    int ch;
-    int option = 1; //start, quit 옵션
 
-    while (1) {
+    int ch;
+    int option = 1; //resume, home 옵션
+
+    while(1) {
         ch = getch();
 
         // 테두리 출력
@@ -34,36 +34,29 @@ int startPage() {
 
         // 선택 옵션에 따라 디스플레이 변경
         switch (option) {
-            case 1: // 게임 시작 선택
+            case 1: // resume 선택
                 attron(COLOR_PAIR(COLOR_CYAN));
-                mvprintw(17, 56, "> Start Game");
+                mvprintw(16, 55, "> Resume");
                 attroff(COLOR_PAIR(COLOR_CYAN));
-                mvprintw(19, 56, "  Quit");
+                mvprintw(18, 55, "  Home");
                 break;
-            case 2: // 게임 종료 선택
-                mvprintw(17, 56, "  Start Game");
+            case 2: // 시작 화면 선택
+                mvprintw(16, 55, "  Resume");
                 attron(COLOR_PAIR(COLOR_RED));
-                mvprintw(19, 56, "> Quit");
+                mvprintw(18, 55, "> Home");
                 attroff(COLOR_PAIR(COLOR_RED));
                 break;
         }
-        
-        // 시작 화면
-        drawTitle();
 
         // 엔터 누를 시 옵션 선택
         if (ch == '\n') {
             if (option == 1) {
-                return PLAY; // 게임 시작
+                return false;
             } else if (option == 2) {
-                clear();
-                if (checkQuitGamePage()) {
-                    return QUIT; // 게임 종료
-                }
-                clear();
+                return true; // 종료 (시작 화면)
             }
         }
 
-        refresh();
+        usleep(10000);
     }
 }
