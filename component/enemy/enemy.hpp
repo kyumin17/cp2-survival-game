@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <queue>
-#include "component.hpp"
-#include "block.hpp"
+#include "../component.hpp"
+#include "../block/block.hpp"
 
 enum Type { ENEMY1, ENEMY2, ENEMY2EXPLORE, ENEMY3, ENEMY4, ENEMY4DIV1, ENEMY4DIV2 };
 

@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include <algorithm>
 #include <cmath>
-#include "component.hpp"
+#include "../component.hpp"
 
 class Block {
     public:

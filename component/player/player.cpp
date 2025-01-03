@@ -5,7 +5,7 @@ Player::Player(int _x, int _y, int _width, int _height, Cell** _image)
     direction = FRONT;
 }
 
-void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr, PlayerCharacter playerCharacter) {
+void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
     /*
     플레이어의 움직임에 따라 배경을 움직임
     */
@@ -16,22 +16,22 @@ void Player::move(int input, vector<Enemy*>& enemyArr, vector<Block*>& blockArr,
     switch (input) {
         case LEFT:
             direction = LEFT;
-            changeCharacter(playerCharacter.left, width, height);
+            changeCharacter(playerLeftImage.data, width, height);
             dx = 1;
             break;
         case RIGHT:
             direction = RIGHT;
-            changeCharacter(playerCharacter.right, width, height);
+            changeCharacter(playerRightImage.data, width, height);
             dx = -1;
             break;
         case BACK:
             direction = BACK;
-            changeCharacter(playerCharacter.back, width, height);
+            changeCharacter(playerUpImage.data, width, height);
             dy = -1;
             break;
         case FRONT:
             direction = FRONT;
-            changeCharacter(playerCharacter.front, width, height);
+            changeCharacter(playerDownImage.data, width, height);
             dy = 1;
             break;
     }

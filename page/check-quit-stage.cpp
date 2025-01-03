@@ -1,5 +1,5 @@
 #include "page.hpp"
-#include "../asset/ui.hpp"
+#include "../manage/ui.hpp"
 
 bool checkQuitStagePage() {
     /*

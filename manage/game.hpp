@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
 #include <random>
-#include "../component/player.hpp"
-#include "../component/enemy.hpp"
-#include "../component/weapon.hpp"
-#include "../component/block.hpp"
-#include "character.hpp"
+#include "../component/enemy/enemy.hpp"
+#include "../component/weapon/bow.hpp"
+#include "../component/weapon/sword.hpp"
+#include "../component/block/block.hpp"
+#include "../component/player/player.hpp"
+#include "../image/enemy/man-image.hpp"
+#include "../image/enemy/worm-image.hpp"
 
 class Game {
     public:
@@ -17,13 +19,6 @@ class Game {
         int weaponType;
         Bow* bow;
         Sword* sword;
-        Eraser* eraser;
-
-        PlayerCharacter playerCharacter;
-        EnemyCharacter enemyCharacter;
-        BowShape bowShape;
-        SwordShape swordShape;
-        EraserShape eraserShape;
 
         int enemyNum; //맵의 전체 적 개수
         int time;

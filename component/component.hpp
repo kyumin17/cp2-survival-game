@@ -1,7 +1,6 @@
 #pragma once
 #include <ncurses.h>
-#include "../etc/display.hpp"
-#include "../etc/character.hpp"
+#include "../manage/display.hpp"
 
 enum Direction { LEFT, RIGHT, BACK, FRONT };
 

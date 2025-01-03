@@ -2,10 +2,9 @@
 
 Game::Game() {
     weaponType = 1;
-    player = new Player(65, 14, 3, 3, playerCharacter.front);
-    bow = new Bow(player -> x, player -> y + 1, bowShape.bowDown);
-    sword = new Sword(player -> x + 3, player -> y - 2, swordShape.swordRight[0]);
-    eraser = new Eraser(player -> x - 2, player -> y - 1, eraserShape.eraserNonactive);
+    player = new Player(65, 14, 3, 3, playerDownImage.data);
+    bow = new Bow(player -> x, player -> y + 1, bowDownImage.data);
+    sword = new Sword(player -> x + 3, player -> y - 2, swordRightImageArr[0].data);
     enemyNum = 10;
     time = 0;
     score = 0;
@@ -137,16 +136,16 @@ void Game::createEnemy() {
         //적 생성
         switch(type) {
             case 1:
-                enemyArr.push_back(new Enemy(ENEMY1, ex, ey, ew, eh, enemyCharacter.enemy1));
+                enemyArr.push_back(new Enemy(ENEMY1, ex, ey, ew, eh, manImage.data));
                 break;
             case 2:
-                enemyArr.push_back(new Enemy(ENEMY2, ex, ey, ew, eh, enemyCharacter.enemy2));
+                enemyArr.push_back(new Enemy(ENEMY2, ex, ey, ew, eh, explosionImage.data));
                 break;
             case 3:
-                enemyArr.push_back(new Enemy(ENEMY3, ex, ey, ew, eh, enemyCharacter.enemy3Right));
+                enemyArr.push_back(new Enemy(ENEMY3, ex, ey, ew, eh, wormRightImage.data));
                 break;
             case 4:
-                enemyArr.push_back(new Enemy(ENEMY4, ex, ey, ew, eh, enemyCharacter.enemy4));
+                enemyArr.push_back(new Enemy(ENEMY4, ex, ey, ew, eh, slimeImage.data));
                 break; 
         }
     }
@@ -166,9 +165,6 @@ void Game::draw() {
             break;
         case 2:
             sword -> draw(&display);
-            break;
-        case 3:
-            eraser -> draw(&display);
             break;
     }
 
@@ -201,8 +197,8 @@ void Game::moveEnemy() {
             if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 enemyArr[i] -> x -= enemyArr[i] -> dx;
             }
-            if (enemyArr[i] -> direction == LEFT) enemyArr[i] -> changeCharacter(enemyCharacter.enemy3Left, 4, 1);
-            if (enemyArr[i] -> direction == RIGHT) enemyArr[i] -> changeCharacter(enemyCharacter.enemy3Right, 4, 1);
+            if (enemyArr[i] -> direction == LEFT) enemyArr[i] -> changeCharacter(wormLeftImage.data, 4, 1);
+            if (enemyArr[i] -> direction == RIGHT) enemyArr[i] -> changeCharacter(wormRightImage.data, 4, 1);
             if (time % (2 * enemyVelocity) == 0) { //y축 이동이 느림
                 enemyArr[i] -> moveY(player -> x, player -> y, blockArr); //일정 시간마다 적이 움직임
                 if (enemyArr[i] -> isBlock(blockArr) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
@@ -255,7 +251,7 @@ bool Game::isEnemy(int idx) {
 
 void Game::movePlayer(int direction) {
     if (!player -> isBlock(blockArr, direction, end)) { //앞에 블럭 없으면 감
-        player -> move(direction, enemyArr, blockArr, playerCharacter);
+        player -> move(direction, enemyArr, blockArr);
     }
 }
 
@@ -312,18 +308,6 @@ void Game::updateWeapon(int input) {
                 }
             }
             break;
-        case 3:
-            if (time % 10 == 0) {
-                if (eraser -> attackTime != 0) {
-                    eraser -> attack(enemyArr);
-                    eraser -> attackTime++;
-                }
-                if (eraser -> attackTime == eraser -> cooldown) {
-                    eraser -> attackTime = 0;
-                    eraser -> changeCharacter(eraserShape.eraserNonactive, eraser -> width, eraser -> height);
-                }
-            }
-            break;
     }
 }
 
@@ -341,12 +325,6 @@ void Game::attack() {
         case 2:
             if (sword -> attackTime == 0) {
                 sword -> attackTime = 1;
-            }
-            break;
-        case 3:
-            if (eraser -> attackTime == 0) {
-                eraser -> attackTime = 1;
-                eraser -> attack(enemyArr);
             }
             break;
     }

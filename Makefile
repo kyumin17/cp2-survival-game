@@ -2,10 +2,14 @@ CC = g++
 CFLAGS = -Wall
 LDFLAGS = -lncurses
 
-SRC = ./component/component.cpp ./component/enemy.cpp ./component/player.cpp ./component/weapon.cpp \
+SRC = ./component/component.cpp ./component/enemy/enemy.cpp ./component/player/player.cpp ./component/weapon/weapon.cpp ./component/block/block.cpp \
+	./component/weapon/bow.cpp ./component/weapon/arrow.cpp ./component/weapon/sword.cpp \
 	./page/play.cpp ./page/start.cpp ./page/check-quit-game.cpp ./page/check-quit-stage.cpp ./page/end.cpp \
-	./asset/enemy.cpp ./asset/player.cpp ./asset/ui.cpp ./asset/weapon.cpp \
-	./etc/character.cpp ./etc/display.cpp ./component/block.cpp ./etc/game.cpp main.cpp
+	./manage/ui.cpp ./manage/display.cpp ./manage/game.cpp \
+	./image/image.cpp ./image/player/player-image.cpp \
+	./image/enemy/explosion-image.cpp ./image/enemy/man-image.cpp ./image/enemy/slime-image.cpp ./image/enemy/worm-image.cpp \
+	./image/weapon/arrow-image.cpp ./image/weapon/bow-image.cpp ./image/weapon/sword-image.cpp \
+	main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

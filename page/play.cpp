@@ -1,5 +1,5 @@
 #include "page.hpp"
-#include "../etc/game.hpp"
+#include "../manage/game.hpp"
 
 using namespace std;
 
