@@ -55,6 +55,10 @@ void drawQuitConfirmText() {
     mvprintw(15, 39, "    |_|            |___/                           ");
 }
 
+void drawNewRecordText() {
+    mvprintw(16, 43, "NEW RECORD!");
+}
+
 void drawEndText() {
     mvprintw(5, 36, "   ____    _    __  __ _____    _____     _______ ____  ");
     mvprintw(6, 36, "  / ___|  / \\  |  \\/  | ____|  / _ \\ \\   / / ____|  _ \\ ");

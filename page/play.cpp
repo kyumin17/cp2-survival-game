@@ -29,9 +29,7 @@ int playPage(int& score) {
                 game.attack();
                 break;
             case 27: // ESC, 게임 중단
-                clear();
                 if (checkQuitStagePage()) {
-                    clear();
                     return START;
                 }
                 break;
@@ -50,7 +48,7 @@ int playPage(int& score) {
         
         game.end = game.end || game.player -> isDamaged(game.enemyArr); // 적에 닿을 시 게임 종료
 
-        usleep(10000); // 10ms마다 loop
+        usleep(SLEEP);
     }
 
     clear();
