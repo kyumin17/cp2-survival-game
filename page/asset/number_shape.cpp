@@ -1,4 +1,4 @@
-#include "number-shape.hpp"
+#include "number_shape.hpp"
 
 vector<vector<string>> getNumberShapeList() {
     vector<vector<string>> number_shape_list;

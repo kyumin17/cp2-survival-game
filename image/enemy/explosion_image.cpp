@@ -1,4 +1,4 @@
-#include "explosion-image.hpp"
+#include "explosion_image.hpp"
 
 // 상황에 따른 폭발하는 적 이미지
 vector<string> explosionTxt = {

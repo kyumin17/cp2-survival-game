@@ -1,10 +1,10 @@
 #pragma once
-#include "weapon.hpp"
+#include "../weapon.hpp"
 #include "arrow.hpp"
-#include "../../image/weapon/bow-image.hpp"
-#include "../../image/weapon/arrow-image.hpp"
-#include "../../image/enemy/explosion-image.hpp"
-#include "../../image/enemy/slime-image.hpp"
+#include "../../../image/weapon/bow_image.hpp"
+#include "../../../image/weapon/arrow_image.hpp"
+#include "../../../image/enemy/explosion_image.hpp"
+#include "../../../image/enemy/slime_image.hpp"
 
 class Bow: public Weapon {
     public:

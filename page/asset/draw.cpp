@@ -70,3 +70,20 @@ void drawEndText() {
     mvprintw(13, 43, "|_  |  | | |_| |_  '");
     mvprintw(14, 43, "__| |_ |_| | | |_  '");
 }
+
+void drawBackground(int score, int weapon_type) {
+    attron(COLOR_PAIR(11));
+    mvprintw(1, 119, "SCORE: %d", score);
+    switch(weapon_type) {
+        case 1:
+            mvprintw(3, 119, "arrow(1)");
+            break;
+        case 2:
+            mvprintw(3, 119, "sword(2)");
+            break;
+        case 3:
+            mvprintw(3, 119, "eraser(3)");
+            break;
+    }
+    attroff(COLOR_PAIR(11));
+}

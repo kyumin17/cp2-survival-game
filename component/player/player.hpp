@@ -4,7 +4,7 @@
 #include "../component.hpp"
 #include "../block/block.hpp"
 #include "../enemy/enemy.hpp"
-#include "../../image/player/player-image.hpp"
+#include "../../image/player/player_image.hpp"
 
 using namespace std;
 

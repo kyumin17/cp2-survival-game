@@ -1,5 +1,5 @@
 #pragma once
-#include "weapon.hpp"
+#include "../weapon.hpp"
 
 class Arrow: public Component  {
     public:

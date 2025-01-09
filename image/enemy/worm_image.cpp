@@ -1,4 +1,4 @@
-#include "worm-image.hpp"
+#include "worm_image.hpp"
 
 // 지렁이 적 이미지
 vector<string> wormLeftTxt = {

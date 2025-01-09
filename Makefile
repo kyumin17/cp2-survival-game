@@ -3,13 +3,14 @@ CFLAGS = -Wall
 LDFLAGS = -lncurses
 
 SRC = ./component/component.cpp ./component/enemy/enemy.cpp ./component/player/player.cpp ./component/weapon/weapon.cpp ./component/block/block.cpp \
-	./component/weapon/bow.cpp ./component/weapon/arrow.cpp ./component/weapon/sword.cpp \
-	./page/play.cpp ./page/start.cpp ./page/check-quit-game.cpp ./page/check-quit-stage.cpp ./page/end.cpp \
-	./page/asset/draw.cpp ./page/asset/option.cpp ./page/asset/score.cpp ./page/asset/number-shape.cpp \
-	./manage/display.cpp ./manage/game.cpp \
-	./image/image.cpp ./image/player/player-image.cpp \
-	./image/enemy/explosion-image.cpp ./image/enemy/man-image.cpp ./image/enemy/slime-image.cpp ./image/enemy/worm-image.cpp \
-	./image/weapon/arrow-image.cpp ./image/weapon/bow-image.cpp ./image/weapon/sword-image.cpp \
+	./component/block/block_container.cpp ./component/enemy/enemy_container.cpp ./component/weapon/weapon_manager.cpp \
+	./component/weapon/type/bow.cpp ./component/weapon/type/arrow.cpp ./component/weapon/type/sword.cpp \
+	./page/play.cpp ./page/start.cpp ./page/check_quit_game.cpp ./page/check_quit_stage.cpp ./page/end.cpp \
+	./page/asset/draw.cpp ./page/asset/option.cpp ./page/asset/score.cpp ./page/asset/number_shape.cpp ./page/asset/get_direction.cpp \
+	./component/display/display.cpp \
+	./image/image.cpp ./image/player/player_image.cpp \
+	./image/enemy/explosion_image.cpp ./image/enemy/man_image.cpp ./image/enemy/slime_image.cpp ./image/enemy/worm_image.cpp \
+	./image/weapon/arrow_image.cpp ./image/weapon/bow_image.cpp ./image/weapon/sword_image.cpp \
 	main.cpp
 
 OBJ = $(SRC:.cpp=.o)

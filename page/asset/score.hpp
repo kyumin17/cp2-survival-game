@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <ncurses.h>
-#include "number-shape.hpp"
+#include "number_shape.hpp"
 
 using namespace std;
 

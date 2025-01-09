@@ -1,4 +1,4 @@
-#include "slime-image.hpp"
+#include "slime_image.hpp"
 
 // 슬라임 적 이미지
 vector<string> slimeTxt = {

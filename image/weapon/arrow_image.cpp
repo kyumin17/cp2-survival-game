@@ -1,4 +1,4 @@
-#include "bow-image.hpp"
+#include "bow_image.hpp"
 
 // 화살 이미지
 vector<string> arrowLeftTxt = {

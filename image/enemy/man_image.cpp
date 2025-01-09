@@ -1,4 +1,4 @@
-#include "man-image.hpp"
+#include "man_image.hpp"
 
 // 기본 적 이미지
 vector<string> manTxt = {

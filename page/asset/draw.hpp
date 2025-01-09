@@ -9,3 +9,5 @@ void drawQuitConfirmText();
 void drawNewRecordText();
 
 void drawEndText();
+
+void drawBackground(int score, int weapon_type);

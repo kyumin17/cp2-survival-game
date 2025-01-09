@@ -1,4 +1,4 @@
-#include "player-image.hpp"
+#include "player_image.hpp"
 
 // 바라보는 방향에 따른 플레이어 캐릭터
 vector<string> playerLeftTxt = {

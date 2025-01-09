@@ -26,7 +26,7 @@ void Bow::attack(int direction) {
     }
 }
 
-void Bow::changeBowDirection(int direction, int playerX, int playerY) {
+void Bow::changeBowDirection(int direction, int player_x, int player_y) {
     /*
     플레이어가 바라보는 방향에 따라 화살 이미지 변경
     */
@@ -34,23 +34,23 @@ void Bow::changeBowDirection(int direction, int playerX, int playerY) {
     switch (direction) {
         case LEFT:
             changeCharacter(bowLeftImage.data, width, height);
-            x = playerX - 3;
-            y = playerY + 1;
+            x = player_x - 3;
+            y = player_y + 1;
             break;
         case RIGHT:
             changeCharacter(bowRightImage.data, width, height);
-            x = playerX + 3;
-            y = playerY + 1;
+            x = player_x + 3;
+            y = player_y + 1;
             break;
         case BACK:
             changeCharacter(bowUpImage.data, width, height);
-            x = playerX;
-            y = playerY + 1;
+            x = player_x;
+            y = player_y + 1;
             break;
         case FRONT:
             changeCharacter(bowDownImage.data, width, height);
-            x = playerX;
-            y = playerY + 1;
+            x = player_x;
+            y = player_y + 1;
             break;
     }
 }

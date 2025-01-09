@@ -1,4 +1,4 @@
-#include "sword-image.hpp"
+#include "sword_image.hpp"
 
 // 검 이미지
 vector<string> swordRight0Txt = {
