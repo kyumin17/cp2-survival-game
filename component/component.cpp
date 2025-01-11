@@ -33,7 +33,7 @@ void Component::changeCharacter(Cell** _character, int _width, int _height) {
     }
 }
 
-void Component::draw(Display* display) {
+void Component::draw(Display& display) {
     /*
     화면에 컴포넌트 그림
     */
@@ -50,8 +50,8 @@ void Component::draw(Display* display) {
             int nr = row + r;
             int nc = col + c;
             if (0 <= nr && nr < HEIGHT && 0 <= nc && nc < WIDTH) { //화면 밖으로 나갈 시 출력X
-                display -> screen[row + r][col + c].value = character[row][col].value;
-                display -> screen[row + r][col + c].color = character[row][col].color;
+                display.screen[row + r][col + c].value = character[row][col].value;
+                display.screen[row + r][col + c].color = character[row][col].color;
             }
         }
     }

@@ -25,7 +25,7 @@ void BlockContainer::createBlock(Player* player, int block_num) {
     }
 }
 
-void BlockContainer::draw(Display display) {
+void BlockContainer::draw() {
     for (size_t i = 0; i < array.size(); i++) {
         array[i] -> draw();
     }

@@ -12,5 +12,5 @@ class BlockContainer {
         vector<Block*> array;
         BlockContainer();
         void createBlock(Player* player, int block_num);
-        void draw(Display display);
+        void draw();
 };

@@ -41,11 +41,11 @@ int playPage(int& s) {
 
         weaponManager.updateWeapon(direction, time, &player, enemy_container, block_container); // 무기 상태 업데이트
         
-        player.draw(&display);
+        player.draw(display);
         weaponManager.draw(display);
         enemy_container.draw(display);
         display.printDisplay();
-        block_container.draw(display);
+        block_container.draw();
 
         enemy_container.createEnemy(score, block_container);
 

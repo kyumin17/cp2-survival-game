@@ -5,14 +5,14 @@ WeaponManager::WeaponManager(int player_x, int player_y): weapon_type(1) {
     sword = new Sword(player_x + 3, player_y - 2, swordRightImageArr[0].data);
 }
 
-void WeaponManager::draw(Display display) {
+void WeaponManager::draw(Display& display) {
     switch(weapon_type) {
         case 1:
-            bow -> draw(&display);
-            bow -> drawArrows(&display);
+            bow -> draw(display);
+            bow -> drawArrows(display);
             break;
         case 2:
-            sword -> draw(&display);
+            sword -> draw(display);
             break;
     }
 }
@@ -21,7 +21,7 @@ void WeaponManager::changeWeapon() {
     weapon_type = weapon_type == 1 ? 2 : 1;
 }
 
-void WeaponManager::updateWeapon(int input, int time, Player* player, EnemyContainer enemyContainer, BlockContainer blockContainer) {
+void WeaponManager::updateWeapon(int input, int time, Player* player, EnemyContainer& enemyContainer, BlockContainer& blockContainer) {
     switch (weapon_type) {
         case 1:
             //플레이어 방향에 따라 활 방향 변경

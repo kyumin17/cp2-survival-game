@@ -158,9 +158,9 @@ bool EnemyContainer::isEnemy(int idx) {
     return false;
 }
 
-void EnemyContainer::draw(Display display) {
+void EnemyContainer::draw(Display& display) {
     for (size_t i = 0; i < array.size(); i++) {
-        array[i] -> draw(&display);
+        array[i] -> draw(display);
     }
 }
 

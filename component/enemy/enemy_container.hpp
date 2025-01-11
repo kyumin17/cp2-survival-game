@@ -20,6 +20,6 @@ class EnemyContainer {
         void createEnemy(int score, BlockContainer blockContainer);
         void moveEnemy(BlockContainer blockContainer, int player_x, int player_y, int time);
         bool isEnemy(int idx);
-        void draw(Display display);
+        void draw(Display& display);
         void updateEnemy(int score);
 };

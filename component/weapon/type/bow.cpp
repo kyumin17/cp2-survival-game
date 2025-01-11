@@ -55,7 +55,7 @@ void Bow::changeBowDirection(int direction, int player_x, int player_y) {
     }
 }
 
-void Bow::drawArrows(Display* display) {
+void Bow::drawArrows(Display& display) {
     for (size_t i = 0; i < arrowArr.size(); i++) {
         arrowArr[i] -> draw(display);
     }

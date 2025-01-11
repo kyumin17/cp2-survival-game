@@ -12,8 +12,8 @@ class WeaponManager {
         Bow* bow;
         Sword* sword;
         WeaponManager(int player_x, int player_y);
-        void draw(Display display);
+        void draw(Display& display);
         void changeWeapon();
-        void updateWeapon(int input, int time, Player* player, EnemyContainer enemyContainer, BlockContainer blockContainer);
+        void updateWeapon(int input, int time, Player* player, EnemyContainer& enemyContainer, BlockContainer& blockContainer);
         void attack(int direction);
 };
