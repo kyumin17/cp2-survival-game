@@ -9,7 +9,7 @@ using namespace std;
 
 class Weapon: public Component {
     public:
-        int attackTime; //공격 유지 시간 측정
+        int attack_time; //공격 유지 시간 측정
         int cooldown; //쿨타임
         Weapon(int _x, int _y, int _width, int _height, int _cooldown, Cell** _character);
 };

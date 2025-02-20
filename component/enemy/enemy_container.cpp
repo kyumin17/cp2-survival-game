@@ -7,7 +7,7 @@ EnemyContainer::EnemyContainer(): length(0) {
     create_freq[1] = create_freq[2] = create_freq[3] = 0;
 }
 
-void EnemyContainer::createEnemy(int score, BlockContainer blockContainer) {
+void EnemyContainer::createEnemy(int score, BlockContainer block_container) {
     //랜덤
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -17,7 +17,7 @@ void EnemyContainer::createEnemy(int score, BlockContainer blockContainer) {
     int create_num = max_num - array.size();
     int freq_sum = create_freq[0] + create_freq[1] + create_freq[2] + create_freq[3];
 
-    std::uniform_int_distribution<int> disTypeSeed(1, freq_sum);
+    std::uniform_int_distribution<int> dis_type_seed(1, freq_sum);
     
     //생성된 적만큼 점수 증가
     if (score != 0 && create_num > 0) {
@@ -30,12 +30,12 @@ void EnemyContainer::createEnemy(int score, BlockContainer blockContainer) {
         int ey = dis_y(gen); //적 y좌표
         int ew, eh;
         int type = 4;
-        int seed = disTypeSeed(gen);
+        int seed = dis_type_seed(gen);
 
         //예외처리
-        bool isValidPos = true;
+        bool is_valid_pos = true;
         if (55 <= ex && ex <= 75) { //플레이어 근방
-            isValidPos = false;
+            is_valid_pos = false;
         }
 
         //freq 배열의 확률로 생성
@@ -63,34 +63,34 @@ void EnemyContainer::createEnemy(int score, BlockContainer blockContainer) {
                 break;
         }
 
-        for (size_t i = 0; i < blockContainer.array.size(); i++) { //블럭과 만남
-            if (blockContainer.array[i] -> isOverlap(ex, ey, ew, eh)) { //블럭 위치에 적 생성되지 않도록
-                isValidPos = false;
+        for (size_t i = 0; i < block_container.array.size(); i++) { //블럭과 만남
+            if (block_container.array[i] -> isOverlap(ex, ey, ew, eh)) { //블럭 위치에 적 생성되지 않도록
+                is_valid_pos = false;
                 break;
             }
         }
 
-        if (!isValidPos) continue;
+        if (!is_valid_pos) continue;
 
         //적 생성
         switch(type) {
             case 1:
-                array.push_back(new Enemy(ENEMY1, ex, ey, ew, eh, manImage.data));
+                array.push_back(new Enemy(ENEMY1, ex, ey, ew, eh, man_image.data));
                 break;
             case 2:
-                array.push_back(new Enemy(ENEMY2, ex, ey, ew, eh, explosionImage.data));
+                array.push_back(new Enemy(ENEMY2, ex, ey, ew, eh, explosion_image.data));
                 break;
             case 3:
-                array.push_back(new Enemy(ENEMY3, ex, ey, ew, eh, wormRightImage.data));
+                array.push_back(new Enemy(ENEMY3, ex, ey, ew, eh, worm_right_image.data));
                 break;
             case 4:
-                array.push_back(new Enemy(ENEMY4, ex, ey, ew, eh, slimeImage.data));
+                array.push_back(new Enemy(ENEMY4, ex, ey, ew, eh, slime_image.data));
                 break; 
         }
     }
 }
 
-void EnemyContainer::moveEnemy(BlockContainer blockContainer, int player_x, int player_y, int time) {
+void EnemyContainer::moveEnemy(BlockContainer block_container, int player_x, int player_y, int time) {
     /*
     일정 프레임마다 적 움직임
     앞에 블럭 혹은 다른 적 있을 시 피해서 감
@@ -99,18 +99,18 @@ void EnemyContainer::moveEnemy(BlockContainer blockContainer, int player_x, int 
     for (size_t i = 0; i < array.size(); i++) {
             
         if (array[i] -> type == ENEMY3 && time % (int)(enemy_velocity / 3) == 0) {
-            if (array[i] -> surviveTime++ == 100) { //블럭에 막혀서 못 오는 경우 대비
+            if (array[i] -> survive_time++ == 100) { //블럭에 막혀서 못 오는 경우 대비
                 array.erase(array.begin() + i);
             }
-            array[i] -> moveX(player_x, player_y, blockContainer.array); //일정 시간마다 적이 움직임
-            if (array[i] -> isBlock(blockContainer.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+            array[i] -> moveX(player_x, player_y, block_container.array); //일정 시간마다 적이 움직임
+            if (array[i] -> isBlock(block_container.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 array[i] -> x -= array[i] -> dx;
             }
-            if (array[i] -> direction == LEFT) array[i] -> changeCharacter(wormLeftImage.data, 4, 1);
-            if (array[i] -> direction == RIGHT) array[i] -> changeCharacter(wormRightImage.data, 4, 1);
+            if (array[i] -> direction == LEFT) array[i] -> changeCharacter(worm_left_image.data, 4, 1);
+            if (array[i] -> direction == RIGHT) array[i] -> changeCharacter(worm_right_image.data, 4, 1);
             if (time % (2 * enemy_velocity) == 0) { //y축 이동이 느림
-                array[i] -> moveY(player_x, player_y, blockContainer.array); //일정 시간마다 적이 움직임
-                if (array[i] -> isBlock(blockContainer.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+                array[i] -> moveY(player_x, player_y, block_container.array); //일정 시간마다 적이 움직임
+                if (array[i] -> isBlock(block_container.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                     array[i] -> y -= array[i] -> dy;
                 }
             }
@@ -118,15 +118,15 @@ void EnemyContainer::moveEnemy(BlockContainer blockContainer, int player_x, int 
         }
 
         if (array[i] -> type != ENEMY3 && time % enemy_velocity == 0) {
-            if (array[i] -> surviveTime++ == 100) { //블럭에 막혀서 못 오는 경우 대비
+            if (array[i] -> survive_time++ == 100) { //블럭에 막혀서 못 오는 경우 대비
                 array.erase(array.begin() + i);
             }
-            array[i] -> moveX(player_x, player_y, blockContainer.array); //일정 시간마다 적이 움직임
-            if (array[i] -> isBlock(blockContainer.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+            array[i] -> moveX(player_x, player_y, block_container.array); //일정 시간마다 적이 움직임
+            if (array[i] -> isBlock(block_container.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 array[i] -> x -= array[i] -> dx;
             }
-            array[i] -> moveY(player_x, player_y, blockContainer.array); //일정 시간마다 적이 움직임
-            if (array[i] -> isBlock(blockContainer.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
+            array[i] -> moveY(player_x, player_y, block_container.array); //일정 시간마다 적이 움직임
+            if (array[i] -> isBlock(block_container.array) || isEnemy(i)) { //다른 적 혹은 block과 충돌 시 원위치
                 array[i] -> y -= array[i] -> dy;
             }
             if (array[i] -> type == ENEMY2EXPLORE) {

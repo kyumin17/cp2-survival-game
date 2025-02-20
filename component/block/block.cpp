@@ -1,10 +1,10 @@
 #include "block.hpp"
 
-Block::Block(int _x, int _y, int _height, bool _isAttack) {
+Block::Block(int _x, int _y, int _height, bool _is_attack) {
     x = _x;
     y = _y;
     height = _height;
-    isAttack = _isAttack;
+    is_attack = _is_attack;
 }
 
 void Block::draw() {
@@ -22,13 +22,13 @@ void Block::draw() {
     }
 
     /*화면 안의 블럭 영역만 출력*/
-    if (isAttack) attron(COLOR_PAIR(10)); //피해 입힐 시 초록색
+    if (is_attack) attron(COLOR_PAIR(10)); //피해 입힐 시 초록색
     for (int row = std::max(r, 0); row < std::min(r + height, HEIGHT); row++) {
         for (int col = std::max(c, 0); col < std::min(c + 2 * height, WIDTH); col++) {
             mvaddch(row, col, ACS_CKBOARD);
         }
     }
-    if (isAttack) attroff(COLOR_PAIR(10));
+    if (is_attack) attroff(COLOR_PAIR(10));
 }
 
 bool Block::isOverlap(int cx, int cy, int cw, int ch) {

@@ -3,13 +3,13 @@
 
 using namespace std;
 
-int endPage(int score, int& maxScore) {
+int endPage(int score, int& max_score) {
     int ch;
     int option = 1;
     bool isMaxScore = false;
 
-    if (maxScore < score) {
-        maxScore = score;
+    if (max_score < score) {
+        max_score = score;
         isMaxScore = true;
     }
 

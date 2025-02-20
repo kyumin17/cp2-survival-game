@@ -14,9 +14,9 @@ class Enemy: public Component {
         int type; //적 종류
         int dx;
         int dy;
-        int surviveTime;
+        int survive_time;
         Enemy(int _type, int _x, int _y, int _width, int _height, Cell** _character);
-        void moveX(int playerX, int playerY, vector<Block*>& blockArr);
-        void moveY(int playerX, int playerY, vector<Block*>& blockArr);
-        bool isBlock(vector<Block*>& blockArr);
+        void moveX(int player_x, int player_y, vector<Block*>& block_arr);
+        void moveY(int player_x, int player_y, vector<Block*>& block_arr);
+        bool isBlock(vector<Block*>& block_arr);
 };

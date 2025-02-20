@@ -1,20 +1,20 @@
 #include "slime_image.hpp"
 
 // 슬라임 적 이미지
-vector<string> slimeTxt = {
+vector<string> slime_txt = {
     " /\\ ",
     "(++)"
 };
 
-vector<string> slimeDiv1Txt = {
+vector<string> slime_div1_txt = {
     "(++)"
 };
 
-vector<string> slimeDiv2Txt = {
+vector<string> slime_div2_txt = {
     "(+)"
 };
 
 // 슬라임 적 이미지 클래스 생성
-Image slimeImage(slimeTxt, COLOR_GREEN);
-Image slimeDiv1Image(slimeDiv1Txt, COLOR_GREEN);
-Image slimeDiv2Image(slimeDiv2Txt, COLOR_GREEN);
+Image slime_image(slime_txt, COLOR_GREEN);
+Image slime_div1_image(slime_div1_txt, COLOR_GREEN);
+Image slime_div2_image(slime_div2_txt, COLOR_GREEN);

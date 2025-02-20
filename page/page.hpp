@@ -13,7 +13,7 @@ int startPage();
 
 int playPage(int& score);
 
-int endPage(int score, int& maxScore);
+int endPage(int score, int& max_score);
 
 bool checkQuitGamePage();
 

@@ -1,7 +1,7 @@
 #include "sword_image.hpp"
 
 // 검 이미지
-vector<string> swordRight0Txt = {
+vector<string> sword_right0_txt = {
     "|    ",
     "|    ",
     "T    ",
@@ -10,7 +10,7 @@ vector<string> swordRight0Txt = {
     "     "
 };
 
-vector<string> swordRight1Txt = {
+vector<string> sword_right1_txt = {
     "  /  ",
     " /   ",
     "/    ",
@@ -19,7 +19,7 @@ vector<string> swordRight1Txt = {
     "     "
 };
 
-vector<string> swordRight2Txt = {
+vector<string> sword_right2_txt = {
     "     ",
     "     ",
     "- - -",
@@ -28,7 +28,7 @@ vector<string> swordRight2Txt = {
     "     "
 };
 
-vector<string> swordRight3Txt = {
+vector<string> sword_right3_txt = {
     "     ",
     "     ",
     "     ",
@@ -37,7 +37,7 @@ vector<string> swordRight3Txt = {
     "  \\  "
 };
 
-vector<string> swordRight4Txt = {
+vector<string> sword_right4_txt = {
     "     ",
     "     ",
     "     ",
@@ -46,7 +46,7 @@ vector<string> swordRight4Txt = {
     "|    "
 };
 
-vector<string> swordLeft0Txt = {
+vector<string> sword_left0_txt = {
     "    |",
     "    |",
     "    T",
@@ -55,7 +55,7 @@ vector<string> swordLeft0Txt = {
     "     "
 };
 
-vector<string> swordLeft1Txt = {
+vector<string> sword_left1_txt = {
     "  \\  ",
     "   \\ ",
     "    \\",
@@ -64,7 +64,7 @@ vector<string> swordLeft1Txt = {
     "     "
 };
 
-vector<string> swordLeft2Txt = {
+vector<string> sword_left2_txt = {
     "     ",
     "     ",
     "- - -",
@@ -73,7 +73,7 @@ vector<string> swordLeft2Txt = {
     "     "
 };
 
-vector<string> swordLeft3Txt = {
+vector<string> sword_left3_txt = {
     "     ",
     "     ",
     "     ",
@@ -82,7 +82,7 @@ vector<string> swordLeft3Txt = {
     "  /  "
 };
 
-vector<string> swordLeft4Txt = {
+vector<string> sword_left4_txt = {
     "     ",
     "     ",
     "     ",
@@ -92,18 +92,18 @@ vector<string> swordLeft4Txt = {
 };
 
 // 검 이미지 클래스 생성
-Image swordRightImageArr[5] = {
-    Image(swordRight0Txt, COLOR_YELLOW),
-    Image(swordRight1Txt, COLOR_YELLOW),
-    Image(swordRight2Txt, COLOR_YELLOW),
-    Image(swordRight3Txt, COLOR_YELLOW),
-    Image(swordRight4Txt, COLOR_YELLOW),
+Image sword_right_image_array[5] = {
+    Image(sword_right0_txt, COLOR_YELLOW),
+    Image(sword_right1_txt, COLOR_YELLOW),
+    Image(sword_right2_txt, COLOR_YELLOW),
+    Image(sword_right3_txt, COLOR_YELLOW),
+    Image(sword_right4_txt, COLOR_YELLOW),
 };
 
-Image swordLeftImageArr[5] = {
-    Image(swordLeft0Txt, COLOR_YELLOW),
-    Image(swordLeft1Txt, COLOR_YELLOW),
-    Image(swordLeft2Txt, COLOR_YELLOW),
-    Image(swordLeft3Txt, COLOR_YELLOW),
-    Image(swordLeft4Txt, COLOR_YELLOW),
+Image sword_left_image_array[5] = {
+    Image(sword_left0_txt, COLOR_YELLOW),
+    Image(sword_left1_txt, COLOR_YELLOW),
+    Image(sword_left2_txt, COLOR_YELLOW),
+    Image(sword_left3_txt, COLOR_YELLOW),
+    Image(sword_left4_txt, COLOR_YELLOW),
 };

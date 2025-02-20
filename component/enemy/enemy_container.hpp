@@ -17,8 +17,8 @@ class EnemyContainer {
         int create_freq[4];
         vector<Enemy*> array;
         EnemyContainer();
-        void createEnemy(int score, BlockContainer blockContainer);
-        void moveEnemy(BlockContainer blockContainer, int player_x, int player_y, int time);
+        void createEnemy(int score, BlockContainer block_container);
+        void moveEnemy(BlockContainer block_container, int player_x, int player_y, int time);
         bool isEnemy(int idx);
         void draw(Display& display);
         void updateEnemy(int score);

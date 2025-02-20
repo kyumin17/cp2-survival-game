@@ -14,8 +14,8 @@ using namespace std;
 
 int playPage(int& s) {
     char ch;
-    Player player(65, 14, 3, 3, playerDownImage.data);
-    WeaponManager weaponManager(player.x, player.y);
+    Player player(65, 14, 3, 3, player_down_image.data);
+    WeaponManager weapon_manager(player.x, player.y);
     BlockContainer block_container;
     EnemyContainer enemy_container;
     Display display;
@@ -39,10 +39,10 @@ int playPage(int& s) {
         }
 
 
-        weaponManager.updateWeapon(direction, time, &player, enemy_container, block_container); // 무기 상태 업데이트
+        weapon_manager.updateWeapon(direction, time, &player, enemy_container, block_container); // 무기 상태 업데이트
         
         player.draw(display);
-        weaponManager.draw(display);
+        weapon_manager.draw(display);
         enemy_container.draw(display);
         display.printDisplay();
         block_container.draw();
@@ -53,7 +53,7 @@ int playPage(int& s) {
 
         switch(ch) {
             case 'i': // 공격
-                weaponManager.attack(player.direction);
+                weapon_manager.attack(player.direction);
                 break;
             case 27: // ESC, 게임 중단
                 if (checkQuitStagePage()) {
@@ -62,10 +62,10 @@ int playPage(int& s) {
                 break;
             // 무기 전환
             case '1': // 활
-                weaponManager.changeWeapon();
+                weapon_manager.changeWeapon();
                 break;
             case '2': // 검
-                weaponManager.changeWeapon();
+                weapon_manager.changeWeapon();
                 break;
         }
 

@@ -3,6 +3,12 @@
 WSL(Ubuntu)
 
 ### run
+- install ncurses
+```
+sudo apt install libncurses5-dev libncursesw5-dev
+```
+
+- run
 ```
 make
 ./game

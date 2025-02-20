@@ -12,16 +12,16 @@ void Bow::attack(int direction) {
 
     switch(direction) {
         case LEFT:
-            arrowArr.push_back(new Arrow(x, y, direction, arrowLeftImage.data));
+            arrow_arr.push_back(new Arrow(x, y, direction, arrow_left_image.data));
             break;
         case RIGHT:
-            arrowArr.push_back(new Arrow(x + 2, y, direction, arrowRightImage.data));
+            arrow_arr.push_back(new Arrow(x + 2, y, direction, arrow_right_image.data));
             break;
         case BACK:
-            arrowArr.push_back(new Arrow(x + 1, y + 2, direction, arrowUpImage.data));
+            arrow_arr.push_back(new Arrow(x + 1, y + 2, direction, arrow_up_image.data));
             break;
         case FRONT:
-            arrowArr.push_back(new Arrow(x + 1, y, direction, arrowDownImage.data));
+            arrow_arr.push_back(new Arrow(x + 1, y, direction, arrow_down_image.data));
             break;
     }
 }
@@ -33,22 +33,22 @@ void Bow::changeBowDirection(int direction, int player_x, int player_y) {
     
     switch (direction) {
         case LEFT:
-            changeCharacter(bowLeftImage.data, width, height);
+            changeCharacter(bow_left_image.data, width, height);
             x = player_x - 3;
             y = player_y + 1;
             break;
         case RIGHT:
-            changeCharacter(bowRightImage.data, width, height);
+            changeCharacter(bow_right_image.data, width, height);
             x = player_x + 3;
             y = player_y + 1;
             break;
         case BACK:
-            changeCharacter(bowUpImage.data, width, height);
+            changeCharacter(bow_up_image.data, width, height);
             x = player_x;
             y = player_y + 1;
             break;
         case FRONT:
-            changeCharacter(bowDownImage.data, width, height);
+            changeCharacter(bow_down_image.data, width, height);
             x = player_x;
             y = player_y + 1;
             break;
@@ -56,37 +56,37 @@ void Bow::changeBowDirection(int direction, int player_x, int player_y) {
 }
 
 void Bow::drawArrows(Display& display) {
-    for (size_t i = 0; i < arrowArr.size(); i++) {
-        arrowArr[i] -> draw(display);
+    for (size_t i = 0; i < arrow_arr.size(); i++) {
+        arrow_arr[i] -> draw(display);
     }
 }
 
 void Bow::moveArrows() {
-    for (size_t i = 0; i < arrowArr.size(); i++) {
-        arrowArr[i] -> move();
+    for (size_t i = 0; i < arrow_arr.size(); i++) {
+        arrow_arr[i] -> move();
     }
 }
 
-void Bow::checkCollision(vector<Enemy*>& enemyArr, vector<Block*>& blockArr) {
-    size_t s = arrowArr.size();
+void Bow::checkCollision(vector<Enemy*>& enemy_arr, vector<Block*>& block_arr) {
+    size_t s = arrow_arr.size();
     for (size_t i = 0; i < s; i++) {
-        int enemyIdx = arrowArr[i] -> isHitEnemy(enemyArr);
+        int enemyIdx = arrow_arr[i] -> isHitEnemy(enemy_arr);
         if (enemyIdx != -1) {
-            if (enemyArr[enemyIdx] -> type == ENEMY4) {
-                enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[enemyIdx] -> x, enemyArr[enemyIdx] -> y + 1, 4, 1, slimeDiv1Image.data));
-                enemyArr.push_back(new Enemy(ENEMY4DIV1, enemyArr[enemyIdx] -> x + 3, enemyArr[enemyIdx] -> y - 1, 4, 1, slimeDiv1Image.data));
-            } else if (enemyArr[enemyIdx] -> type == ENEMY4DIV1) {
-                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x + 3, enemyArr[enemyIdx] -> y - 1, 3, 1, slimeDiv2Image.data)); 
-                enemyArr.push_back(new Enemy(ENEMY4DIV2, enemyArr[enemyIdx] -> x, enemyArr[enemyIdx] -> y + 1, 3, 1, slimeDiv2Image.data));
-            } else if (enemyArr[enemyIdx] -> type == ENEMY2) {
-                enemyArr.push_back(new Enemy(ENEMY2EXPLORE, enemyArr[enemyIdx] -> x - 5, enemyArr[enemyIdx] -> y - 1, 13, 5, explosionDeadImage.data));
+            if (enemy_arr[enemyIdx] -> type == ENEMY4) {
+                enemy_arr.push_back(new Enemy(ENEMY4DIV1, enemy_arr[enemyIdx] -> x, enemy_arr[enemyIdx] -> y + 1, 4, 1, slime_div1_image.data));
+                enemy_arr.push_back(new Enemy(ENEMY4DIV1, enemy_arr[enemyIdx] -> x + 3, enemy_arr[enemyIdx] -> y - 1, 4, 1, slime_div1_image.data));
+            } else if (enemy_arr[enemyIdx] -> type == ENEMY4DIV1) {
+                enemy_arr.push_back(new Enemy(ENEMY4DIV2, enemy_arr[enemyIdx] -> x + 3, enemy_arr[enemyIdx] -> y - 1, 3, 1, slime_div2_image.data)); 
+                enemy_arr.push_back(new Enemy(ENEMY4DIV2, enemy_arr[enemyIdx] -> x, enemy_arr[enemyIdx] -> y + 1, 3, 1, slime_div2_image.data));
+            } else if (enemy_arr[enemyIdx] -> type == ENEMY2) {
+                enemy_arr.push_back(new Enemy(ENEMY2EXPLORE, enemy_arr[enemyIdx] -> x - 5, enemy_arr[enemyIdx] -> y - 1, 13, 5, explosion_dead_image.data));
             }
 
-            if (enemyArr[enemyIdx] -> type != ENEMY2EXPLORE) {
-                enemyArr.erase(enemyArr.begin() + enemyIdx);
+            if (enemy_arr[enemyIdx] -> type != ENEMY2EXPLORE) {
+                enemy_arr.erase(enemy_arr.begin() + enemyIdx);
             }
-        } else if (arrowArr[i] -> isHitBlock(blockArr)) {
-            arrowArr.erase(arrowArr.begin() + i);
+        } else if (arrow_arr[i] -> isHitBlock(block_arr)) {
+            arrow_arr.erase(arrow_arr.begin() + i);
         }
     }
 }
